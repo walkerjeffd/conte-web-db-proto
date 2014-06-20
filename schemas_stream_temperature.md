@@ -1,39 +1,34 @@
-Potential Schemas for Stream Temperature 
-======================================== 
+Potential Schemas for Stream Temperature
+========================================
 
-**Tables**
+## Field Names
 
-- Data values (site, datetime, value)  
-- Site information (site, agency, lat, lon)
+Ideas for potential fields/element names
 
-**Fields**
-
-Primary:  
-
-- date/time  
-- site
-
-Secondary:  
-
+- datetime  
+- site  
 - qaqc flag  
 - units  
-- agency
-
-Tertiary:  
-
+- agency  
 - statistic (e.g. mean, min, max, inst)  
 - freq (e.g. da, hr, min)  
-- source file
+- source file  
 
-**QAQC Checks**
+## QAQC Checks
 
-- value range  
-- duplicated dates  
-- daily delta  
-- site exists  
-- valid statistic, freq, qaqc, flag, units
+- value range: each value must be within a valid range (e.g. 0-25 degC)  
+- date range: each datetime stamp must be within valid range (e.g. 1900-01-01 - today)
+- duplicated dates: no duplicate dates by site  
+- daily delta: maximum change between successive values or over time (e.g. 5 degC/day)  
+- site exists: if storing site information in separate table, make sure it exists before adding data  
+- valid values: make sure values are valid for enumerated fields (e.g statistic, freq, qaqc, flag, units)
 
-**Storage Options**
+## Other Considerations
+
+- timezone information  
+- missing value (e.g. NA or -9999)  
+
+## Schemas
 
 **Option 1**: individual objects containing all metadata
 
