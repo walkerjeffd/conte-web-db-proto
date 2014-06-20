@@ -1,10 +1,11 @@
-Data Files for Stream Temperature
-=================================
+Summary of Example Files for Stream Temperature Data
+====================================================
 
 Raw data provided by Kyle O'Neil (@Tom-Bombadil) via dropbox (streamTemperature folder)
 
 ## Massachusetts Data
 
+```
 agency: MA Dept. of Fish & Wildlife (FW)
 filename: streamTemperature\rawData\MA\StreamTemperature MAFW 072912.mdb
 format: Access Database
@@ -26,6 +27,7 @@ metadata:
     site tables: MAFW_*Yr_Site
     event tables: MAFW_*Yr_Event
     qaqc: QAQC
+```
 
 ## Maine Data
 
