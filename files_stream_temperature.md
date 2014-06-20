@@ -4,8 +4,8 @@ Summary of Example Files for Stream Temperature Data
 Raw data provided by Kyle O'Neil (@Tom-Bombadil) via dropbox (streamTemperature folder)
 
 Overall conclusions:  
-- data stored in both excel and access  
-- datasets in access could be exported to csv files  
+- data stored in either excel, access, or csv files  
+- datasets in excel or access could be exported to csv files  
 - large inconsistencies in field names  
 - most datasets have a table of values that references a SiteID defined in a separate table
 
