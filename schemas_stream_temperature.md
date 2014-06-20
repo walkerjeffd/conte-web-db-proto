@@ -1,5 +1,5 @@
-Potential Schemas for Stream Temperature
-========================================
+Potential Schemas for Stream Temperature 
+======================================== 
 
 **Tables**
 
