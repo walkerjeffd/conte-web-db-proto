@@ -3,6 +3,12 @@ Summary of Example Files for Stream Temperature Data
 
 Raw data provided by Kyle O'Neil (@Tom-Bombadil) via dropbox (streamTemperature folder)
 
+Overall conclusions:  
+- data stored in both excel and access  
+- datasets in access could be exported to csv files  
+- large inconsistencies in field names  
+- most datasets have a table of values that references a SiteID defined in a separate table
+
 ## Massachusetts Data
 
 ```
@@ -13,13 +19,11 @@ size: 293 mb
 data tables: [{
         tablename: Temperature_MAFW_1Yr
         nrow: 1,077,334
-        nsites: 53 (e.g. MA Cent55Po, MA Sprg60Ru)
         fields: [Site_ID, Event_ID, Date1, Time1, Temp__°C_, QAQC]
         period: 2008 - 2009
     },{
         tablename: Temperature_MAFW_3Yr
         nrow: 479,499
-        nsites: 37
         fields: [Site_ID, Event_ID, Date1, Time1, Temp__°C_, QAQC]
         period: 2005 - 2007
     }]
@@ -31,6 +35,7 @@ metadata:
 
 ## Maine Data
 
+```
 agency: ME Dept. of Marine Resources (DMR)
 files: [ {
         filename: Downeast Mean Daily River Temp_DMRdill.csv
@@ -67,9 +72,11 @@ files: [ {
             notes: station metadata for daily mean temperature data
         }
     }]
+```
 
 ## Montana Data
 
+```
 agency: USGS Northern Rocky Mountain Science Center
 files: [
     {
@@ -88,6 +95,4 @@ files: [
         notes: daily water temp and air temp
     }
 ]
-
-
-
+```
