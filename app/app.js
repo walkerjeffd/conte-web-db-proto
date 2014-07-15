@@ -9,7 +9,10 @@ var express = require('express')
   , mongodb = require('mongodb')
   , mongoose = require('mongoose')
   , bcrypt = require('bcrypt')
-  , SALT_WORK_FACTOR = 10;
+  , SALT_WORK_FACTOR = 10
+  , multer = require('multer')
+  , crate = require('mongoose-crate')
+  , LocalFS = require('mongoose-crate-localfs');
 
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
@@ -55,6 +58,22 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 
 var User = mongoose.model('User', userSchema);
 
+var FileSchema = new mongoose.Schema({
+  description: String,
+  filename: String
+});
+
+FileSchema.plugin(crate, {
+  storage: new LocalFS({
+    directory: './files'
+  }),
+  fields: {
+    file: {}
+  }
+});
+
+var File = mongoose.model('File', FileSchema);
+
 // Seed a user
 // var user = new User({ username: 'bob', email: 'bob@example.com', password: 'secret' });
 // user.save(function(err) {
@@ -91,6 +110,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
 }));
 
 var routes = require('./routes/index');
+// var files = require('./routes/files')
 // var users = require('./routes/users');
 
 var app = express();
@@ -103,6 +123,7 @@ app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+app.use(multer({ dest: './uploads' }));
 app.use(cookieParser());
 app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 app.use(flash());
@@ -112,6 +133,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
 app.use('/', routes);
+// app.use('/files', files);
 // app.use('/users', users);
 
 app.get('/account', ensureAuthenticated, function(req, res){
@@ -133,6 +155,54 @@ app.get('/logout', function(req, res){
   req.logout();
   req.flash('info', 'Log out successful');
   res.redirect('/');
+});
+
+// Files list
+app.get('/files', function(req, res) {
+  File.find(function(err, files) {
+    console.log(files);
+    res.render('files_list', { user: req.user, message: req.flash('info'), files: files });
+  });
+});
+
+// File upload - GET
+app.get('/files/upload', function(req, res) {
+  res.render('file_upload', { user: req.user, message: req.flash('info') });
+});
+
+// File upload - POST
+app.post('/files/upload', function(req, res, next) {
+  console.log(req.files);
+  console.log(req.body);
+  var file = new File();
+  file.filename = req.files.file.originalname;
+  file.description = req.body.description;
+  file.attach('file', req.files.file, function(err) {
+    if(err) return next(err);
+    file.save(function(err) {
+      if(err) return next(err);
+      req.flash('info', 'File has been uploaded.');
+      res.redirect('/files');
+    });
+  });
+});
+
+// File download
+app.get('/files/:id/download', function (req, res, next) {
+  File.findById(req.params.id, function(err, file) {
+    if (err) return next(err);
+    res.download(file.file.url, file.filename);
+  });
+});
+
+// File detail
+app.get('/files/:id', function (req, res, next) {
+  File.findById(req.params.id, function(err, file) {
+    if(err) return next(err);
+    console.log(req.params.id);
+    console.log(file);
+    res.render('file_detail', { user: req.user, message: req.flash('info'), file: file});
+  });
 });
 
 function ensureAuthenticated(req, res, next) {

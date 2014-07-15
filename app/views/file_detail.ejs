@@ -1,0 +1,13 @@
+<% include head %>
+
+<h1>File Detail</h1>
+
+<ul>
+  <li>Filename: <%= file.filename %></li>
+  <li>Description: <%= file.description %></li>
+  <li>URL: <%= file.file.url %></li>
+</ul>
+
+<a href="/files/<%= file.id %>/download" class="btn btn-primary">Download</a>
+
+<% include foot %>

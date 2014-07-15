@@ -1,0 +1,13 @@
+<% include head %>
+
+<h1>Files list</h1>
+
+<p><a href="/files/upload">Upload new file</a>.</p>
+
+<ul>
+  <% for(var i=0; i<files.length; i++) {%>
+    <li><a href="files/<%= files[i].id %>"><%= files[i].description %></a></li>
+  <% } %>
+</ul>
+
+<% include foot %>

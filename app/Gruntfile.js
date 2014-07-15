@@ -12,7 +12,9 @@ module.exports = function(grunt) {
         },
         files: {
           'bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
-          'bootstrap-theme.css': 'bootstrap/dist/css/bootstrap-theme.css'
+          'bootstrap.css.map': 'bootstrap/dist/css/bootstrap.css.map',
+          'bootstrap-theme.css': 'bootstrap/dist/css/bootstrap-theme.css',
+          'bootstrap-theme.css.map': 'bootstrap/dist/css/bootstrap-theme.css.map'
         }
       },
       scripts: {
