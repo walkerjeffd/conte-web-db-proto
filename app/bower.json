@@ -1,0 +1,22 @@
+{
+  "name": "conte-web-db",
+  "main": "app.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/walkerjeffd/conte-web-db",
+  "authors": [
+    "Jeff Walker <walker.jeff.d@gmail.com>"
+  ],
+  "description": "Conte Fish Lab web database system",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1"
+  }
+}
