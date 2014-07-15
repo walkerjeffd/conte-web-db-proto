@@ -1,0 +1,1617 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"method",
+				"methodOverride"
+			],
+			[
+				"EVENT",
+				"EVENT_BASE_FOLDER"
+			],
+			[
+				"fetc",
+				"fetch_and_convert"
+			],
+			[
+				"parameterCon",
+				"parameterContainers"
+			],
+			[
+				"make",
+				"makeProjectList"
+			],
+			[
+				"Proj",
+				"ProjectSerializer"
+			],
+			[
+				"mdate",
+				"mdatetime	DateTimeField (mdatetime)"
+			],
+			[
+				"param",
+				"parameter_id"
+			],
+			[
+				"para",
+				"parameter_id"
+			],
+			[
+				"padd",
+				"padding-bottom"
+			],
+			[
+				"padding",
+				"padding-left"
+			],
+			[
+				"reset",
+				"resetParameters"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"b",
+				"Backbone"
+			],
+			[
+				"A",
+				"AppointmentView"
+			],
+			[
+				"appoint",
+				"appointmentID"
+			],
+			[
+				"app",
+				"appointmentID"
+			],
+			[
+				"Pe",
+				"PeopleCollection"
+			],
+			[
+				"Per",
+				"PersonView"
+			],
+			[
+				"cha",
+				"chartSelection"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"bor",
+				"border-radius"
+			],
+			[
+				"f",
+				"function"
+			],
+			[
+				"feat",
+				"feature"
+			],
+			[
+				"beginhtml",
+				"beginhtml	beginhtml"
+			],
+			[
+				"flights",
+				"flightsJSON"
+			],
+			[
+				"paym",
+				"paymentsJSON"
+			],
+			[
+				"lam",
+				"lambda_f"
+			],
+			[
+				"la",
+				"lambda_21"
+			],
+			[
+				"lamb",
+				"lambda_22"
+			],
+			[
+				"inn",
+				"innerHeight"
+			],
+			[
+				"if",
+				"ife	if … else"
+			],
+			[
+				"make_",
+				"make_controls"
+			],
+			[
+				"reque",
+				"request_wq"
+			],
+			[
+				"asser",
+				"assert_raises"
+			],
+			[
+				"build_w",
+				"build_where_clause"
+			],
+			[
+				"in",
+				"inline-block"
+			],
+			[
+				"m0-auto",
+				"margin	zen:css_properties"
+			],
+			[
+				"w50p",
+				"width	zen:css_properties"
+			],
+			[
+				"try",
+				"try	Try/Except/Finally"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/JSLint/JSLint.sublime-build",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git ad",
+				"Git: Add..."
+			],
+			[
+				"git comm",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"git br",
+				"Git: Change Branch"
+			],
+			[
+				"git stat",
+				"Git: Status"
+			],
+			[
+				"ff",
+				"Fetch: File"
+			],
+			[
+				"fet",
+				"Fetch: File"
+			],
+			[
+				"git commit",
+				"Git: Commit"
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"packin",
+				"Package Control: Install Package"
+			],
+			[
+				"tra",
+				"Trailing Spaces: Delete Trailing Spaces"
+			],
+			[
+				"git am",
+				"Git: Amend Commit"
+			],
+			[
+				"git sta",
+				"Git: Stash Apply"
+			],
+			[
+				"pan",
+				"Pandoc"
+			],
+			[
+				"pand",
+				"Pandoc"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"pack re",
+				"Package Control: Remove Package"
+			],
+			[
+				"git push",
+				"Git: Push Current Branch"
+			],
+			[
+				"git diff",
+				"Git: Diff Staged Files (Ignore Whitespace)"
+			],
+			[
+				"trail",
+				"Trailing Spaces: Delete Trailing Spaces"
+			],
+			[
+				"git di",
+				"Git: Diff All"
+			],
+			[
+				"git tag",
+				"Git: Show Tags"
+			],
+			[
+				"git statu",
+				"Git: Status"
+			],
+			[
+				"packa",
+				"Package Control: Remove Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"git lo",
+				"Git: Log All"
+			],
+			[
+				"git log",
+				"Git: Log All"
+			],
+			[
+				"git cu",
+				"Git: Custom Command"
+			],
+			[
+				"git ",
+				"Git: Open..."
+			],
+			[
+				"data",
+				"DataConverter: to JSON"
+			],
+			[
+				"da",
+				"DataConverter: to text table"
+			],
+			[
+				"dat",
+				"DataConverter: to Python dict"
+			],
+			[
+				"sftp up",
+				"SFTP: Upload File"
+			],
+			[
+				"git dff",
+				"Git: Diff Current File"
+			],
+			[
+				"git dif",
+				"Git: Diff All"
+			],
+			[
+				"ad",
+				"Git: Add..."
+			],
+			[
+				"up",
+				"SFTP: Upload File"
+			],
+			[
+				"uplo",
+				"SFTP: Upload File"
+			],
+			[
+				"git ini",
+				"Git: Init"
+			],
+			[
+				"git res",
+				"Git: Reset (hard) HEAD"
+			],
+			[
+				"git rese",
+				"Git: Reset (hard) HEAD"
+			],
+			[
+				"git d",
+				"Git: Diff All"
+			],
+			[
+				"git mer",
+				"Git: Merge Branch"
+			],
+			[
+				"git b",
+				"Git: Change Branch"
+			],
+			[
+				"git c",
+				"Git: Commit"
+			],
+			[
+				"f",
+				"Fetch: File"
+			],
+			[
+				"git f",
+				"Git: Fetch"
+			],
+			[
+				"gitadd",
+				"Git: Add..."
+			],
+			[
+				"gitad",
+				"Git: Add..."
+			],
+			[
+				"ame",
+				"Git: Amend Commit"
+			],
+			[
+				"stat",
+				"Git: Status"
+			],
+			[
+				"git a",
+				"Git: Amend Commit"
+			],
+			[
+				"add",
+				"Git: Add..."
+			],
+			[
+				"git amm",
+				"Git: Amend Commit"
+			],
+			[
+				"git s",
+				"Git: Status"
+			],
+			[
+				"git st",
+				"Git: Show Tags"
+			],
+			[
+				"git i",
+				"Git: Init"
+			],
+			[
+				"git co",
+				"Git: Commit"
+			],
+			[
+				"git stt",
+				"Git: Status"
+			],
+			[
+				"gita",
+				"Git: Amend Commit"
+			],
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
+			[
+				"fe",
+				"Fetch: File"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: List Packages"
+			],
+			[
+				"ss ht",
+				"Set Syntax: HTML"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"ss h",
+				"Set Syntax: HTML"
+			],
+			[
+				"ss text",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"ssht",
+				"Set Syntax: HTML"
+			],
+			[
+				"Snippet: ",
+				"Snippet: HTML"
+			],
+			[
+				"ss",
+				"Set Syntax: HTML"
+			],
+			[
+				"colo",
+				"Color picker"
+			],
+			[
+				"ip",
+				"LoremIpsum: (200) stick shake"
+			],
+			[
+				"ips",
+				"LoremIpsum: (200) stick shake"
+			],
+			[
+				"brow",
+				"File: Open In Browser - Testing Server"
+			],
+			[
+				"ss xml",
+				"Set Syntax: XML"
+			],
+			[
+				"Snippet: ht",
+				"Snippet: html"
+			],
+			[
+				"ss jav",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"snip htm",
+				"Snippet: html"
+			],
+			[
+				"ss dj",
+				"Set Syntax: Python Django"
+			],
+			[
+				"com",
+				"Git: Commit"
+			],
+			[
+				"ss ja",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"ss css",
+				"Set Syntax: CSS"
+			],
+			[
+				"comm",
+				"Git: Commit"
+			],
+			[
+				"gitst",
+				"Git: Show Tags"
+			],
+			[
+				"Snippet: html",
+				"Snippet: html"
+			],
+			[
+				"search",
+				"File: Search Files"
+			],
+			[
+				"nav",
+				"File: New File Relative to Current View"
+			],
+			[
+				"gi ad",
+				"Git: Add..."
+			],
+			[
+				"move",
+				"File: Move"
+			],
+			[
+				"snip",
+				"Snippet: templatetag"
+			],
+			[
+				"delet",
+				"File: Delete"
+			],
+			[
+				"folder",
+				"Project: Add Folder"
+			],
+			[
+				"dj",
+				"Set Syntax: HTML (Django)"
+			],
+			[
+				"lint",
+				"SublimeLinter: Disable Linting"
+			],
+			[
+				"main",
+				"Snippet: if __name__ == '__main__'"
+			],
+			[
+				"upp",
+				"Convert Case: Upper Case"
+			],
+			[
+				"",
+				"Convert Case: Upper Case"
+			],
+			[
+				"rein",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"path",
+				"File: Copy Path From Project"
+			],
+			[
+				"ss js",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"js",
+				"Set Syntax: JSON"
+			],
+			[
+				"file",
+				"File: Copy Path From Project"
+			],
+			[
+				"re",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"htt",
+				"HTTP Requester"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"goto",
+				"Goto Documentation"
+			],
+			[
+				"got",
+				"Goto Documentation"
+			],
+			[
+				"task",
+				"Tasks: New document"
+			],
+			[
+				"INST",
+				"Package Control: Install Package"
+			],
+			[
+				"doc",
+				"DocBlockr: Decorate line comment"
+			],
+			[
+				"sublim",
+				"SublimeLinter: Extract Annotations"
+			],
+			[
+				"open",
+				"View: Toggle Open Files in Side Bar"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Remove Package"
+			],
+			[
+				"fetc",
+				"Fetch: Manage"
+			],
+			[
+				"Package Control: dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"synt css",
+				"Set Syntax: CSS"
+			],
+			[
+				"snipp",
+				"Snippet: html"
+			],
+			[
+				"ss htm",
+				"Set Syntax: HTML"
+			],
+			[
+				"ss jq",
+				"Set Syntax: jQuery (JavaScript)"
+			],
+			[
+				"pack in",
+				"Package Control: Install Package"
+			],
+			[
+				"snippet:",
+				"Snippet: Try/Except/Else/Finally"
+			],
+			[
+				"sni",
+				"Snippet: If Condition"
+			],
+			[
+				"sni mai",
+				"Snippet: if __name__ == '__main__'"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 160.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/jeff/Library/Application Support/Sublime Text 3/Packages/AdvancedNewFile/Default (OSX).sublime-keymap",
+		"/Users/jeff/Projects/USGS/conte-web-db/.gitignore",
+		"/Users/jeff/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/jeff/Projects/USGS/Conte_Web_System/README.md",
+		"/Users/jeff/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/README.md",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/README.md",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/views/index.jade",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/app.js",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/routes/r.js",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/r_scripts/example.R",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/views/r.jade",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/package.json",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/.gitignore",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/views/layout.jade",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/routes/index.js",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/LICENSE",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/bower.json",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/conte-web-system.sublime-project",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/bin/www",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/conte-web-system.sublime-workspace",
+		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/node_modules/jade/node_modules/monocle/node_modules/readdirp/examples/node_modules/event-stream/node_modules/from/LICENSE.APACHE2",
+		"/C/Users/Jeff/Dropbox/USGS/prototype/.gitignore",
+		"/C/Users/Jeff/Dropbox/USGS/prototype/app/package.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/io.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/views/random.jade",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/r/randn.R",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/node_modules/nodemon/node_modules/ps-tree/node_modules/event-stream/test/readArray.asynct.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/app.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/views/index.jade",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/views/layout.jade",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/bin/www",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/package.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/public/javascripts/socket.io.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/public/javascripts/jquery.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/plot.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/randn.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/index.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/node-rio/ex2.R",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/index.jade",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/routes/index.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/node_modules/less-middleware/node_modules/less/test/less/errors/import-no-semi.less",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/node_modules/less-middleware/node_modules/less/lib/source-map/source-map-header.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/node_modules/mongoose/static.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/users/show",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/node_modules/less-middleware/node_modules/less/test/less/no-js-errors/no-js-errors.less",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/node_modules/.bin/nodemon",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/users/new",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/package.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/app.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/bin/www",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/public/hello.txt",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/user.jade",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/mixins.jade",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/home.jade",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/layout.jade",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/node_modules/less-middleware/node_modules/less/test/css/debug/linenumbers-all.css",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/node_modules/express/LICENSE",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/home.jad",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/11/twitter.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/10/connect.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/10/query.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/10/server.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/06/config.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/10/config.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/6-files/__MACOSX/._config.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/6-files/config.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/09/package.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/08/github.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/08/server.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/07/request.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/08/my_module.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/7-files/request.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/6-files/server.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/06/server.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/4-files/server.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/13-files/server.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/12-files/server.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/10-files/server.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/04/server.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/04/config.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/configuration.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/config.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/10-files/config.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/12-files/config.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/3-files/config.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/4-files/config.json",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/05/sample.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/04/public/world.html",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/6-files/public/world.html",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/write_sync.txt",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/04/public/hello.html",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/6-files/public/hello.html",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/write_sync.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/write.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/watch.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/3-files/configuration.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/read_sync.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/3-files/read_sync.js",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/read.js",
+		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/files/sample.txt",
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/3-files/sample.txt",
+		"/C/Users/Jeff/Dropbox/Projects/py-prism/fetch.py",
+		"/C/Users/Jeff/Dropbox/Work/klamath/2013_WhitePapers/data/lake_hydro/elev.csv",
+		"/C/Users/Jeff/Dropbox/Work/klamath/2013_WhitePapers/data/hydro/README.txt",
+		"/C/Users/Jeff/Dropbox/USGS/repo/conte-web-db/files_stream_temperature.md",
+		"/C/Users/Jeff/Dropbox/USGS/repo/conte-web-db/.gitignore",
+		"/C/Users/Jeff/Dropbox/USGS/repo/conte-web-db/schemas_stream_temperature.md",
+		"/C/Users/Jeff/Dropbox/USGS/repo/conte-web-db/temperature_metadata.md",
+		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/User/Pandoc.sublime-settings",
+		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/Pandoc/Pandoc.sublime-settings",
+		"/C/Users/Jeff/Dropbox/USGS/repo/conte-web-db/data_files_temp.md",
+		"/C/Users/Jeff/Dropbox/USGS/repo/conte-web-db/README.md",
+		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/AdvancedNewFile/Default (Windows).sublime-keymap",
+		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/User/TextPastry.sublime-settings",
+		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/Text Pastry/Default (Windows).sublime-keymap",
+		"/C/Users/Jeff/Dropbox/Work/klamath/2013_WhitePapers/r/met/md/Makefile",
+		"/C/Users/Jeff/Dropbox/Talks/20140516_umass/index.html",
+		"/C/Users/Jeff/Dropbox/Thesis/projects/living/app.py",
+		"/C/Users/Jeff/Dropbox/Work/klamath/2013_WhitePapers/data/wq_lake/kt/stations.csv",
+		"/C/Users/Jeff/Dropbox/Work/klamath/2013_WhitePapers/data/wq_lake/README.txt",
+		"/C/Users/Jeff/Dropbox/Work/klamath/2013_WhitePapers/data/wq_lake/kt/README.txt",
+		"/C/Users/Jeff/Dropbox/Projects/py-qpf-app/web/app/templates/base.html",
+		"/C/Users/Jeff/Dropbox/Projects/py-qpf-app/web/config.py",
+		"/C/Users/Jeff/Dropbox/Projects/py-qpf-app/web/app/__init__.py",
+		"/C/Users/Jeff/Dropbox/Projects/py-qpf-app/web/manage.py"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"+p",
+			"input(",
+			"input",
+			"\"",
+			"socket",
+			"\"",
+			"result[0]",
+			"result",
+			"clientSource",
+			"client",
+			"\"",
+			"res",
+			"$",
+			"})",
+			"'",
+			"name2",
+			"from",
+			"param",
+			"\"",
+			"'",
+			"user",
+			"bodyParser",
+			"port",
+			"host",
+			"repo",
+			"“",
+			"”",
+			"dir",
+			"\" ",
+			"**",
+			"Pros",
+			"Option",
+			"Pros",
+			"\\",
+			"Option",
+			", site: $$$",
+			"site: $$$",
+			"$$$",
+			"number sites",
+			"number rows",
+			"field names",
+			".csv",
+			",",
+			" ",
+			"    ",
+			"   ",
+			"  ",
+			"    ",
+			"   ",
+			"  ",
+			" ",
+			"h2",
+			"h3",
+			"li",
+			"p>",
+			"W",
+			"°",
+			"W",
+			"1",
+			"proj/",
+			"proj",
+			"lib",
+			"data",
+			"tab-btn",
+			"</p>",
+			"<p>",
+			"p>",
+			"div",
+			"post",
+			"location.html",
+			"nws",
+			"latest_forecasts",
+			"\"",
+			"start",
+			"int(config",
+			"START",
+			"START_DATE",
+			"csv",
+			"res['YearMonthDay']",
+			"res",
+			"x",
+			"res['YearMonthDay']",
+			"d",
+			"r.text",
+			"lines",
+			"=",
+			"i",
+			"/",
+			"ALPHA_SOURCE_FOLDER",
+			"=None",
+			"event_id",
+			"filename",
+			"load_and_save_usgs",
+			"\\",
+			"usgs",
+			"usgs_alewife",
+			"ale_flows",
+			"ale_",
+			"–",
+			"h1",
+			"<li>",
+			"<activation@example.com>",
+			"local",
+			"\\",
+			"com",
+			"wirm.walkerjeff",
+			"em",
+			"modal",
+			"h5",
+			"input",
+			"static",
+			"local",
+			"public",
+			"local",
+			"100",
+			"60px",
+			"h4",
+			"span10",
+			"span2",
+			"Parameter",
+			"class=\"row",
+			"row",
+			"pk",
+			"vent",
+			"modal",
+			"span3",
+			"h3",
+			"id="
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"\"",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 36.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 130.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 130.0
+	},
+	"output.gotodocumentation":
+	{
+		"height": 130.0
+	},
+	"output.sftp":
+	{
+		"height": 130.0
+	},
+	"project": "conte-web-db.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				".gi",
+				".gitignore"
+			],
+			[
+				"rea",
+				"prototype-webapp\\README.md"
+			],
+			[
+				"ind",
+				"prototype-webapp\\views\\index.jade"
+			],
+			[
+				"exa",
+				"prototype-webapp\\r_scripts\\example.R"
+			],
+			[
+				"app",
+				"prototype-webapp\\app.js"
+			],
+			[
+				"lay",
+				"prototype-webapp\\views\\layout.jade"
+			],
+			[
+				"app.js",
+				"prototype-webapp\\app.js"
+			],
+			[
+				"pack",
+				"prototype-webapp\\package.json"
+			],
+			[
+				"bo",
+				"prototype-webapp\\bower.json"
+			],
+			[
+				"ran",
+				"views\\random.jade"
+			],
+			[
+				"io",
+				"io.js"
+			],
+			[
+				"pa",
+				"package.json"
+			],
+			[
+				"www",
+				"bin\\www"
+			],
+			[
+				"ap",
+				"app.js"
+			],
+			[
+				"pac",
+				"package.json"
+			],
+			[
+				"show",
+				"views\\users\\show.jade"
+			],
+			[
+				"new.j",
+				"views\\users\\new.jade"
+			],
+			[
+				"new",
+				"views\\users\\new.jade"
+			],
+			[
+				"ww",
+				"bin\\www"
+			],
+			[
+				"p",
+				"package.json"
+			],
+			[
+				"hom",
+				"views\\home.jade"
+			],
+			[
+				"h",
+				"views\\home.jade"
+			],
+			[
+				"home",
+				"views\\home.jade"
+			],
+			[
+				"6con",
+				"06\\config.json"
+			],
+			[
+				"08s",
+				"08\\server.js"
+			],
+			[
+				"reque",
+				"tuts\\7-files\\request.js"
+			],
+			[
+				"server",
+				"tuts\\6-files\\server.js"
+			],
+			[
+				"conf",
+				"06\\config.json"
+			],
+			[
+				"config",
+				"04\\config.json"
+			],
+			[
+				"worl",
+				"tuts\\6-files\\public\\world.html"
+			],
+			[
+				"hello",
+				"tuts\\6-files\\public\\hello.html"
+			],
+			[
+				"write",
+				"03\\write_sync.txt"
+			],
+			[
+				"confi",
+				"tuts\\3-files\\config.json"
+			],
+			[
+				"fil",
+				"files_stream_temperature.md"
+			],
+			[
+				"sc",
+				"schemas_stream_temperature.md"
+			],
+			[
+				"r",
+				"README.md"
+			],
+			[
+				"in",
+				"index.html"
+			],
+			[
+				"bas",
+				"app\\templates\\base.html"
+			],
+			[
+				"__",
+				"app\\__init__.py"
+			],
+			[
+				"man",
+				"manage.py"
+			],
+			[
+				"ma",
+				"manage.py"
+			],
+			[
+				"con",
+				"config.py"
+			],
+			[
+				"req",
+				"requirements\\common.txt"
+			],
+			[
+				"com",
+				"requirements\\common.txt"
+			],
+			[
+				"comm",
+				"requirements\\common.txt"
+			],
+			[
+				"loca",
+				"app\\templates\\location_detail.html"
+			],
+			[
+				".g",
+				".gitignore"
+			],
+			[
+				"read",
+				"README.md"
+			],
+			[
+				"css",
+				"app\\static\\css\\styles.css"
+			],
+			[
+				"base",
+				"app\\templates\\base.html"
+			],
+			[
+				"_lo",
+				"app\\templates\\_locations.html"
+			],
+			[
+				"_loc",
+				"app\\templates\\_locations.html"
+			],
+			[
+				"view",
+				"app\\main\\views.py"
+			],
+			[
+				"loc",
+				"app\\templates\\location.html"
+			],
+			[
+				"usgs",
+				"usgs.py"
+			],
+			[
+				"ql",
+				"qlcd.py"
+			],
+			[
+				"main",
+				"main.py"
+			],
+			[
+				"temp",
+				"temp.txt"
+			],
+			[
+				"q",
+				"qlcd.py"
+			],
+			[
+				"ip",
+				"ipython_log.py"
+			],
+			[
+				"raw",
+				"raw_data.txt"
+			],
+			[
+				"al",
+				"alpha.py"
+			],
+			[
+				"usg",
+				"usgs.py"
+			],
+			[
+				"ba",
+				"app\\templates\\base.html"
+			],
+			[
+				"lo",
+				"app\\templates\\location.html"
+			],
+			[
+				"a",
+				"alpha.py"
+			],
+			[
+				"git",
+				".gitignore"
+			],
+			[
+				"res",
+				"templates\\resume.html"
+			],
+			[
+				"wa",
+				"walkerjeff-com.sublime-project"
+			],
+			[
+				"pr",
+				"mysite\\mysite\\settings\\production_template.py"
+			],
+			[
+				"pro",
+				"mysite\\mysite\\settings\\production.py"
+			],
+			[
+				"abou",
+				"mysite\\templates\\about.html"
+			],
+			[
+				"local.py",
+				"mysite\\mysite\\settings\\local.py"
+			],
+			[
+				"prote",
+				"mysite\\mysite\\settings\\production_template.py"
+			],
+			[
+				"lot",
+				"mysite\\mysite\\settings\\local_template.py"
+			],
+			[
+				"base_",
+				"mysite\\mysite\\settings\\base_template.py"
+			],
+			[
+				"pte",
+				"mysite\\mysite\\settings\\production_template.py"
+			],
+			[
+				"bast",
+				"mysite\\mysite\\settings\\base_template.py"
+			],
+			[
+				".git",
+				".gitignore"
+			],
+			[
+				"about",
+				"mysite\\templates\\about.html"
+			],
+			[
+				"engin",
+				"test/engine.js"
+			],
+			[
+				"theo",
+				"mysite/templates/theory.html"
+			],
+			[
+				"tuto",
+				"mysite/templates/tutorial.html"
+			],
+			[
+				"cli",
+				"mysite/templates/client.html"
+			],
+			[
+				"local",
+				"mysite/mysite/settings/local.py"
+			],
+			[
+				"the",
+				"mysite/templates/theory.html"
+			],
+			[
+				"pas",
+				"passenger_wsgi.py"
+			],
+			[
+				"clie",
+				"mysite/templates/client.html"
+			],
+			[
+				"ab",
+				"mysite/templates/about.html"
+			],
+			[
+				"sett",
+				"mysite/mysite/settings/base.py"
+			],
+			[
+				"set",
+				"mysite/mysite/settings/production.py"
+			],
+			[
+				"json",
+				"mysite/fixtures/parameters.json"
+			],
+			[
+				"das",
+				"mysite/wirm/static/js/views/dashboard.js"
+			],
+			[
+				"work",
+				"mysite/wirm/static/js/routers/workspace.js"
+			],
+			[
+				"proje",
+				"mysite/wirm/static/js/views/project.js"
+			],
+			[
+				"proj",
+				"mysite/wirm/static/js/models/project.js"
+			],
+			[
+				"contr",
+				"mysite/wirm/static/js/views/controls.js"
+			],
+			[
+				"sim",
+				"mysite/wirm/static/js/views/simulation.js"
+			],
+			[
+				"char",
+				"mysite/wirm/static/js/views/chart.js"
+			],
+			[
+				"chart",
+				"mysite/wirm/static/js/views/chart.js"
+			],
+			[
+				"projec",
+				"mysite/wirm/static/js/views/project.js"
+			],
+			[
+				"url",
+				"mysite/mysite/urls.py"
+			],
+			[
+				"back",
+				"mysite/templates/background.html"
+			],
+			[
+				"tut",
+				"mysite/templates/tutorial.html"
+			],
+			[
+				"cont",
+				"mysite/wirm/static/js/views/controls.js"
+			],
+			[
+				"th",
+				"mysite/templates/theory.html"
+			],
+			[
+				"g",
+				"mysite/templates/getting_started.html"
+			],
+			[
+				"b",
+				"mysite/wirm/static/css/base.css"
+			],
+			[
+				"gett",
+				"mysite/templates/getting_started.html"
+			],
+			[
+				"theor",
+				"mysite/templates/theory.html"
+			],
+			[
+				"dash",
+				"mysite/wirm/static/js/views/dashboard.js"
+			],
+			[
+				"simul",
+				"mysite/wirm/static/js/views/simulation.js"
+			],
+			[
+				"mod",
+				"mysite/wirm/models.py"
+			],
+			[
+				"seri",
+				"mysite/wirm/serializers.py"
+			],
+			[
+				"model",
+				"mysite/wirm/models.py"
+			],
+			[
+				"param",
+				"mysite/wirm/static/js/views/parameter.js"
+			],
+			[
+				"d3",
+				"mysite/wirm/static/js/lib/d3-3.0.8.js"
+			],
+			[
+				"clien",
+				"mysite/templates/client.html"
+			],
+			[
+				"bascss",
+				"mysite/wirm/static/css/base.css"
+			],
+			[
+				"log",
+				"mysite/templates/registration/login.html"
+			],
+			[
+				"ge",
+				"mysite/templates/getting_started.html"
+			],
+			[
+				"serial",
+				"mysite/wirm/serializers.py"
+			],
+			[
+				"get",
+				"mysite/templates/getting_started.html"
+			],
+			[
+				"comments",
+				"mysite/wirm/static/js/collections/comments.js"
+			],
+			[
+				"moproj",
+				"mysite/wirm/static/js/models/project.js"
+			],
+			[
+				"para",
+				"mysite/wirm/static/js/views/parameter.js"
+			],
+			[
+				"ser",
+				"mysite/wirm/serializers.py"
+			],
+			[
+				"admin",
+				"mysite/wirm/admin.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/C/Users/Jeff/Dropbox/Courses/coursera/ml/assignments/ml.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 281.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
