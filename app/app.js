@@ -115,7 +115,7 @@ app.use('/', routes);
 // app.use('/users', users);
 
 app.get('/account', ensureAuthenticated, function(req, res){
-  res.render('account', { user: req.user });
+  res.render('account', { user: req.user, message: req.flash('error') });
 });
 
 app.get('/login', function(req, res){
@@ -156,7 +156,8 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error: err
+            error: err,
+            user: req.user
         });
     });
 }
@@ -167,7 +168,8 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
-        error: {}
+        error: {},
+        user: req.user
     });
 });
 
