@@ -1,61 +1,94 @@
-var express = require('express');
-var session = require('express-session')
-var path = require('path');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var flash = require('connect-flash');
+var express = require('express')
+  , session = require('express-session')
+  , path = require('path')
+  , favicon = require('static-favicon')
+  , logger = require('morgan')
+  , cookieParser = require('cookie-parser')
+  , bodyParser = require('body-parser')
+  , flash = require('connect-flash')
+  , mongodb = require('mongodb')
+  , mongoose = require('mongoose')
+  , bcrypt = require('bcrypt')
+  , SALT_WORK_FACTOR = 10;
 
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
 
-var users = [
-  { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com' },
-  { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
-];
+mongoose.connect('localhost', 'test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback() {
+  console.log('Connected to DB');
+});
 
-function findById(id, fn) {
-  var idx = id - 1;
-  if (users[idx]) {
-    fn(null, users[idx]);
-  } else {
-    fn(new Error('User ' + id + ' does not exist'));
-  }
-}
+// User Schema
+var userSchema = mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true},
+});
 
-function findByUsername(username, fn) {
-  for (var i = 0, len = users.length; i < len; i++) {
-    var user = users[i];
-    if (user.username === username) {
-      return fn(null, user);
-    }
-  }
-  return fn(null, null);
-}
+// Bcrypt middleware
+userSchema.pre('save', function(next) {
+  var user = this;
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    process.nextTick(function() {
-      findByUsername(username, function(err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-        if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
-        return done(null, user);
-      })
+  if(!user.isModified('password')) return next();
+
+  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+    if(err) return next(err);
+
+    bcrypt.hash(user.password, salt, function(err, hash) {
+      if(err) return next(err);
+      user.password = hash;
+      next();
     });
-  }
-));
+  });
+});
+
+// Password verification
+userSchema.methods.comparePassword = function(candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+    if(err) return cb(err);
+    cb(null, isMatch);
+  });
+};
+
+var User = mongoose.model('User', userSchema);
+
+// Seed a user
+// var user = new User({ username: 'bob', email: 'bob@example.com', password: 'secret' });
+// user.save(function(err) {
+//   if(err) {
+//     console.log(err);
+//   } else {
+//     console.log('user: ' + user.username + " saved.");
+//   }
+// });
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  findById(id, function(err, user) {
+  User.findById(id, function (err, user) {
     done(err, user);
   });
 });
+
+passport.use(new LocalStrategy(function(username, password, done) {
+    User.findOne({ username: username }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
+      user.comparePassword(password, function(err, isMatch) {
+        if (err) return done(err);
+        if(isMatch) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: 'Invalid password' });
+        }
+      });
+    });
+}));
 
 var routes = require('./routes/index');
 // var users = require('./routes/users');
