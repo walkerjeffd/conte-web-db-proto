@@ -14,7 +14,8 @@ module.exports = function(grunt) {
           'bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
           'bootstrap.css.map': 'bootstrap/dist/css/bootstrap.css.map',
           'bootstrap-theme.css': 'bootstrap/dist/css/bootstrap-theme.css',
-          'bootstrap-theme.css.map': 'bootstrap/dist/css/bootstrap-theme.css.map'
+          'bootstrap-theme.css.map': 'bootstrap/dist/css/bootstrap-theme.css.map',
+          'bootstrap-theme-lumen.min.css': 'bootstrap-theme-lumen/index.css'
         }
       },
       scripts: {
