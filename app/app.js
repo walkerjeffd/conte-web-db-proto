@@ -10,9 +10,7 @@ var express = require('express')
   , mongoose = require('mongoose')
   , bcrypt = require('bcrypt')
   , SALT_WORK_FACTOR = 10
-  , multer = require('multer')
-  , crate = require('mongoose-crate')
-  , LocalFS = require('mongoose-crate-localfs');
+  , multer = require('multer');
 
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
@@ -58,21 +56,7 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 
 var User = mongoose.model('User', userSchema);
 
-var FileSchema = new mongoose.Schema({
-  description: String,
-  filename: String
-});
-
-FileSchema.plugin(crate, {
-  storage: new LocalFS({
-    directory: './files'
-  }),
-  fields: {
-    file: {}
-  }
-});
-
-var File = mongoose.model('File', FileSchema);
+var File = require('./models/file.js');
 
 // Seed a user
 // var user = new User({ username: 'bob', email: 'bob@example.com', password: 'secret' });
@@ -161,13 +145,13 @@ app.get('/logout', function(req, res){
 app.get('/files', function(req, res) {
   File.find(function(err, files) {
     console.log(files);
-    res.render('files_list', { user: req.user, message: req.flash('info'), files: files });
+    res.render('files/list', { user: req.user, message: req.flash('info'), files: files });
   });
 });
 
 // File upload - GET
 app.get('/files/upload', function(req, res) {
-  res.render('file_upload', { user: req.user, message: req.flash('info') });
+  res.render('files/upload', { user: req.user, message: req.flash('info') });
 });
 
 // File upload - POST
@@ -201,7 +185,7 @@ app.get('/files/:id', function (req, res, next) {
     if(err) return next(err);
     console.log(req.params.id);
     console.log(file);
-    res.render('file_detail', { user: req.user, message: req.flash('info'), file: file});
+    res.render('files/detail', { user: req.user, message: req.flash('info'), file: file});
   });
 });
 

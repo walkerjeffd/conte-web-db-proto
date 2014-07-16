@@ -167,6 +167,15 @@
 	},
 	"buffers":
 	[
+		{
+			"contents": "#include <JeeLib.h>\n\nISR(WDT_vect) { Sleepy::watchdogEvent(); }\n \n \n#define outFileName \"data000.csv\"\n \n#define BATTERYPIN A3\n\n \n\n // temp and humidity\n #include \"DHT.h\"\n\n#define DHTPIN A1     // what pin we're connected to\n\n #define DHTTYPE DHT22   // DHT 22  (AM2302)\n\n\n#include <Wire.h>\n\nint debug=1;\n\n\nDHT dht(DHTPIN, DHTTYPE);\n \n\nint led = A2;\n\n\n \n#include <SPI.h>\n#include <SD.h>\n \n#include <RTClib.h>\n#include <RTC_DS3231.h>\n \nRTC_DS3231 RTC;\n \n \n// On the Ethernet Shield, CS is pin 4. Note that even if it's not\n// used as the CS pin, the hardware CS pin (10 on most Arduino boards,\n// 53 on the Mega) must be left as an output or the SD library\n// functions will not work.\nconst int chipSelect = 7;    \nint SDpower = 5;\nint sensorPower = 4;\n \n \nFile dataFile;\n \n \n \nvoid setup(void) {\n  if (debug==1){\n    Serial.begin(9600);\n  }    \n  \n  pinMode(led, OUTPUT); \n  dht.begin();\n  \n  \n  pinMode(SDpower,OUTPUT);\n  pinMode(sensorPower,OUTPUT);\n  digitalWrite(SDpower,LOW);\n  digitalWrite(sensorPower,LOW);\n  \n   //initialize the SD card\n  \n  if (debug==1){\n  Serial.print(\"Initializing SD card...\");\n  }\n  // make sure that the default chip select pin is set to\n  // output, even if you don't use it:\n  pinMode(SS, OUTPUT);\n  \n  // see if the card is present and can be initialized:\n  if (!SD.begin(chipSelect)) {\n  \n     if (debug==1){\n    Serial.println(\"Card failed, or not present\");\n     }\n    // don't do anything more:\n    while (1) ;\n  }\n\n if (debug==1) {\n    Serial.println(\"card initialized.\");\n    }\n  //shut down the SD and the sensor -- HIGH is off\n  //digitalWrite(SDpower,HIGH);\n // digitalWrite(sensorPower,HIGH);\n  \n  pinMode(led, OUTPUT); \n  \n  // for i2c for RTC\n  Wire.begin();\n  RTC.begin();\n  \n\n  //analogReference(EXTERNAL);\n \n  \n  \n  \n  // check on the RTC\n  if (! RTC.isrunning()) {\n     if (debug==1){\n      Serial.println(\"RTC is NOT running!\");\n     }\n      // following line sets the RTC to the date & time this sketch was compiled\n      RTC.adjust(DateTime(__DATE__, __TIME__));\n    }\n  \n    DateTime now = RTC.now();\n    DateTime compiled = DateTime(__DATE__, __TIME__);\n    if (now.unixtime() < compiled.unixtime()) {\n      //Serial.println(\"RTC is older than compile time!  Updating\");\n      RTC.adjust(DateTime(__DATE__, __TIME__));\n    }\n    \n\n  \n  \n}\n \nvoid loop(void) {\n  \n  \n  \n  \n  \n  \n  digitalWrite(led, LOW);\n  //delay(200);\n  \n  Sleepy::loseSomeTime(5000); //-- will interfere with serial, so don't use when debugging \n  //delay (5000); // use when debugging -- loseSomeTime does goofy things w/ serial\n  \n  //wake up the SD card and the sensor\n  //digitalWrite(SDpower,LOW);\n  //digitalWrite(sensorPower,LOW);\n  \n  //dht22\n  // Reading temperature or humidity takes about 250 milliseconds!\n  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)\n  float h = dht.readHumidity();\n  // Read temperature as Celsius\n  float t = dht.readTemperature();\n  // Read temperature as Fahrenheit\n  float f = dht.readTemperature(true);\n  \n  // Check if any reads failed and exit early (to try again).\n  if (isnan(h) || isnan(t) || isnan(f)) {\n     if (debug==1){\n    Serial.println(\"Failed to read from DHT sensor!\");\n     }\n    return;\n  }\n\n  // Compute heat index\n  // Must send in temp in Fahrenheit!\n  float hi = dht.computeHeatIndex(f, h);\n if (debug==1){\n  Serial.print(\"Humidity: \"); \n  Serial.print(h);\n  Serial.print(\" %\\t\");\n  Serial.print(\"Temperature: \"); \n  Serial.print(t);\n  Serial.print(\" *C \");\n  Serial.print(f);\n  Serial.print(\" *F\\t\");\n  Serial.print(\"Heat index: \");\n  Serial.print(hi);\n  Serial.println(\" *F\");\n }\n  \n  \n  \n  DateTime now = RTC.now();\n  \n  //get the onboard temp from the RTC\n  //RTC.forceTempConv(true);  //DS3231 does this every 64 seconds, we are simply testing the function here\n    float RTCTemp = RTC.getTempAsFloat();\n  \n  \n   long unixNow = now.unixtime();\n   //bSerial.println(now.unixtime());\n   \n    \n  digitalWrite(led, HIGH);\n   delay(50);\n   \n  // delay(1000);\n   \n // uint8_t i;\n  \n \n\n \n \n// get the battery level\nint batteryLevel = analogRead(BATTERYPIN);\n \n    \n // write to sd card\n \n \n /*\n // Open up the file we're going to log to!\n  dataFile = SD.open(outFileName, FILE_WRITE);\n  if (! dataFile) {\n    Serial.println(\"error opening datalog.txt\");\n    // Wait forever since we cant write data\n    while (1) ;\n  }\n  */\n  \n  \n  \n  int onboardTempInt = (int) (RTCTemp*100);\n  \n  \n  // make a string for assembling the data to log:\n  String dataString = \"\";\n  \n  dataString += String(unixNow);\n  dataString +=\",\";\n  \n  dataString += onboardTempInt;\n  \n  //dataString += String(unixNow);\n  dataString+=\",\";\n  \n    \n  //Serial.print(h);\n  dataString += String((int) (h*100));\n  dataString+=\",\";\n  \n   //Serial.print(t);\n  dataString += String((int) (t*100));\n  dataString+=\",\";\n    \n  dataString += String(batteryLevel);\n   //no final comma needed\n \n \n \n    // Open up the file we're going to log to!\n  dataFile = SD.open(outFileName, FILE_WRITE);\n  if (! dataFile) {\n     if (debug==1){\n    Serial.println(\"error opening datalog.txt\");\n     }\n    // Wait forever since we cant write data\n    while (1) ;\n  }\n  \n \n \n \n  //write the string to the card\n  dataFile.println(dataString);\n \n dataFile.close();\n  \n   if (debug==1){\n  // print to the serial port too:\n  Serial.println(dataString);\n   }\n   \n  // The following line will 'save' the file to the SD card after every\n  // line of data - this will use more power and slow down how much data\n  // you can read but it's safer! \n  // If you want to speed up the system, remove the call to flush() and it\n  // will save the file only every 512 bytes - every time a sector on the \n  // SD card is filled with data.\n // dataFile.flush();\n //dataFile.close(); //<--- may be unnecessary\n \n \n //shut down the SD and the sensor\n  //digitalWrite(SDpower,HIGH);\n  //digitalWrite(sensorPower,HIGH);\n  \n  //delay(1000);\n  \n}",
+			"settings":
+			{
+				"buffer_size": 5875,
+				"line_ending": "Unix",
+				"name": "#include <JeeLib.h>"
+			}
+		}
 	],
 	"build_system": "Packages/JSLint/JSLint.sublime-build",
 	"command_palette":
@@ -708,9 +717,35 @@
 	},
 	"file_history":
 	[
-		"/Users/jeff/Library/Application Support/Sublime Text 3/Packages/AdvancedNewFile/Default (OSX).sublime-keymap",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/file_detail.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/Gruntfile.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/files_list.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/app.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/routes/files.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/routes/index.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/index.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/login.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/file_upload.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/nav.ejs",
 		"/Users/jeff/Projects/USGS/conte-web-db/.gitignore",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/grunt-bowercopy/node_modules/bower/node_modules/request/node_modules/oauth-sign/index.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/grunt-bowercopy/node_modules/bower/node_modules/retry/lib/retry_operation.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/README.md",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/README.md",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/head.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/package.json",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/error.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/public/stylesheets/style.css",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/bower_components/bootstrap/less/mixins/nav-vertical-align.less",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/foot.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/bower_components/bootstrap/LICENSE",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/bower_components/bootstrap/less/labels.less",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/express/lib/router/layer.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/bcrypt/examples/async_compare.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/account.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/layout.ejs",
 		"/Users/jeff/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/jeff/Library/Application Support/Sublime Text 3/Packages/AdvancedNewFile/Default (OSX).sublime-keymap",
 		"/Users/jeff/Projects/USGS/Conte_Web_System/README.md",
 		"/Users/jeff/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/C/Users/Jeff/Dropbox/USGS/repo/Conte_Web_System/prototype-webapp/README.md",
@@ -809,33 +844,7 @@
 		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/3-files/read_sync.js",
 		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/read.js",
 		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/files/sample.txt",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/3-files/sample.txt",
-		"/C/Users/Jeff/Dropbox/Projects/py-prism/fetch.py",
-		"/C/Users/Jeff/Dropbox/Work/klamath/2013_WhitePapers/data/lake_hydro/elev.csv",
-		"/C/Users/Jeff/Dropbox/Work/klamath/2013_WhitePapers/data/hydro/README.txt",
-		"/C/Users/Jeff/Dropbox/USGS/repo/conte-web-db/files_stream_temperature.md",
-		"/C/Users/Jeff/Dropbox/USGS/repo/conte-web-db/.gitignore",
-		"/C/Users/Jeff/Dropbox/USGS/repo/conte-web-db/schemas_stream_temperature.md",
-		"/C/Users/Jeff/Dropbox/USGS/repo/conte-web-db/temperature_metadata.md",
-		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/User/Pandoc.sublime-settings",
-		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/Pandoc/Pandoc.sublime-settings",
-		"/C/Users/Jeff/Dropbox/USGS/repo/conte-web-db/data_files_temp.md",
-		"/C/Users/Jeff/Dropbox/USGS/repo/conte-web-db/README.md",
-		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/AdvancedNewFile/Default (Windows).sublime-keymap",
-		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
-		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/User/TextPastry.sublime-settings",
-		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/Text Pastry/Default (Windows).sublime-keymap",
-		"/C/Users/Jeff/Dropbox/Work/klamath/2013_WhitePapers/r/met/md/Makefile",
-		"/C/Users/Jeff/Dropbox/Talks/20140516_umass/index.html",
-		"/C/Users/Jeff/Dropbox/Thesis/projects/living/app.py",
-		"/C/Users/Jeff/Dropbox/Work/klamath/2013_WhitePapers/data/wq_lake/kt/stations.csv",
-		"/C/Users/Jeff/Dropbox/Work/klamath/2013_WhitePapers/data/wq_lake/README.txt",
-		"/C/Users/Jeff/Dropbox/Work/klamath/2013_WhitePapers/data/wq_lake/kt/README.txt",
-		"/C/Users/Jeff/Dropbox/Projects/py-qpf-app/web/app/templates/base.html",
-		"/C/Users/Jeff/Dropbox/Projects/py-qpf-app/web/config.py",
-		"/C/Users/Jeff/Dropbox/Projects/py-qpf-app/web/app/__init__.py",
-		"/C/Users/Jeff/Dropbox/Projects/py-qpf-app/web/manage.py"
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/files/sample.txt"
 	],
 	"find":
 	{
@@ -853,6 +862,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"css",
+			"save",
+			"router",
+			"post",
+			"ensureAuthenticated",
+			"username",
+			"Username",
+			"**",
+			"bootstrap",
+			"engine",
+			"delete",
+			"h2",
+			"users",
+			"Log In",
 			"+p",
 			"input(",
 			"input",
@@ -966,21 +989,7 @@
 			"static",
 			"local",
 			"public",
-			"local",
-			"100",
-			"60px",
-			"h4",
-			"span10",
-			"span2",
-			"Parameter",
-			"class=\"row",
-			"row",
-			"pk",
-			"vent",
-			"modal",
-			"span3",
-			"h3",
-			"id="
+			"local"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1000,8 +1009,39 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5875,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5875,
+								5875
+							]
+						],
+						"settings":
+						{
+							"auto_name": "#include <JeeLib.h>",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 4473.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1068,6 +1108,46 @@
 		"selected_items":
 		[
 			[
+				"g",
+				"app/Gruntfile.js"
+			],
+			[
+				"roin",
+				"app/routes/index.js"
+			],
+			[
+				"inde",
+				"app/views/index.ejs"
+			],
+			[
+				"app",
+				"app/app.js"
+			],
+			[
+				"nav",
+				"app/views/nav.ejs"
+			],
+			[
+				"foo",
+				"app/views/foot.ejs"
+			],
+			[
+				"head",
+				"app/views/head.ejs"
+			],
+			[
+				"ind",
+				"app/views/index.ejs"
+			],
+			[
+				".g",
+				".gitignore"
+			],
+			[
+				"pack",
+				"app/package.json"
+			],
+			[
 				".gi",
 				".gitignore"
 			],
@@ -1076,16 +1156,8 @@
 				"prototype-webapp\\README.md"
 			],
 			[
-				"ind",
-				"prototype-webapp\\views\\index.jade"
-			],
-			[
 				"exa",
 				"prototype-webapp\\r_scripts\\example.R"
-			],
-			[
-				"app",
-				"prototype-webapp\\app.js"
 			],
 			[
 				"lay",
@@ -1094,10 +1166,6 @@
 			[
 				"app.js",
 				"prototype-webapp\\app.js"
-			],
-			[
-				"pack",
-				"prototype-webapp\\package.json"
 			],
 			[
 				"bo",
@@ -1250,10 +1318,6 @@
 			[
 				"loca",
 				"app\\templates\\location_detail.html"
-			],
-			[
-				".g",
-				".gitignore"
 			],
 			[
 				"read",
@@ -1492,10 +1556,6 @@
 				"mysite/templates/theory.html"
 			],
 			[
-				"g",
-				"mysite/templates/getting_started.html"
-			],
-			[
 				"b",
 				"mysite/wirm/static/css/base.css"
 			],
@@ -1558,26 +1618,6 @@
 			[
 				"get",
 				"mysite/templates/getting_started.html"
-			],
-			[
-				"comments",
-				"mysite/wirm/static/js/collections/comments.js"
-			],
-			[
-				"moproj",
-				"mysite/wirm/static/js/models/project.js"
-			],
-			[
-				"para",
-				"mysite/wirm/static/js/views/parameter.js"
-			],
-			[
-				"ser",
-				"mysite/wirm/serializers.py"
-			],
-			[
-				"admin",
-				"mysite/wirm/admin.py"
 			]
 		],
 		"width": 0.0
