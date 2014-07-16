@@ -73,7 +73,7 @@ router.post('/upload', function(req, res, next) {
   ], function (err, result) {
     if(err) return next(err);
     req.flash('info', 'Dataset has been uploaded.');
-    res.redirect('/datasets');
+    res.redirect('/datasets/' + result.id);
   });
 });
 
