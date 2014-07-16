@@ -2,6 +2,14 @@
 
 <h1>Dataset detail</h1>
 
+<% if (dataset.series && dataset.series.length > 0) { %>
+  <ul>
+  <% for(var i=0; i<dataset.series.length; i++) {%>
+    <li><a href="/series/<%= dataset.series[i].id %>"><%= dataset.series[i].variable %></a></li>
+  <% } %>
+  </ul>
+<% } %>
+
 <pre><%= dataset %></pre>
 
 <% include ../foot %>

@@ -44,21 +44,4 @@ var app = express();
 // Express config
 require('./config/express')(app, config, passport);
 
-// add dummy user for development
-if (env === 'development') {
-  User = mongoose.model('User');
-  User.count({}, function (err, count) {
-    if (count === 0) {
-      var user = new User({ username: 'bob', email: 'bob@example.com', password: 'secret' });
-      user.save(function(err) {
-        if(err) {
-          console.log(err);
-        } else {
-          console.log('user: ' + user.username + " saved.");
-        }
-      });
-    }
-  });
-}
-
 module.exports = app;

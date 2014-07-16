@@ -79,7 +79,7 @@ router.post('/upload', function(req, res, next) {
 
 // Dataset detail
 router.get('/:id', function (req, res, next) {
-  Dataset.find({'_id': req.params.id})
+  Dataset.findOne({'_id': req.params.id})
     .populate('user file series')
     .exec(function(err, dataset) {
       if(err) return next(err);

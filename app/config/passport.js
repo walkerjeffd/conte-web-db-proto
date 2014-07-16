@@ -5,18 +5,11 @@ var mongoose = require('mongoose')
 module.exports = function (passport, config) {
   // serialize sessions
   passport.serializeUser(function(user, done) {
-    console.log('serializing: ', user.username);
     done(null, user.id);
   });
 
   passport.deserializeUser(function(id, done) {
-    console.log('deserializing: ', id);
     User.findById(id, function (err, user) {
-      if (err) {
-        console.log('Error: ', err);
-      } else {
-        console.log('Success, user is ', user.username)
-      }
       done(err, user);
     })
   });
