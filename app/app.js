@@ -1,4 +1,5 @@
-var express = require('express')
+var fs = require('fs')
+  , express = require('express')
   , session = require('express-session')
   , path = require('path')
   , favicon = require('static-favicon')
@@ -7,56 +8,56 @@ var express = require('express')
   , bodyParser = require('body-parser')
   , flash = require('connect-flash')
   , mongodb = require('mongodb')
-  , mongoose = require('mongoose')
-  , bcrypt = require('bcrypt')
-  , SALT_WORK_FACTOR = 10
   , multer = require('multer');
 
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
 
-mongoose.connect('localhost', 'test');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback() {
+// Load configurations
+var env = process.env.NODE_ENV || 'development'
+  , config = require('./config/config')[env]
+  , mongoose = require('mongoose');
+
+// Bootstrap db connection
+// Connect to mongodb
+var connect = function () {
+  var options = { server: { socketOptions: { keepAlive: 1 } } }
+  mongoose.connect(config.db, options)
+}
+connect()
+
+// Error handler
+mongoose.connection.on('error', function (err) {
+  console.log(err)
+})
+
+// Reconnect when closed
+mongoose.connection.on('disconnected', function () {
+  connect()
+})
+
+// Open
+mongoose.connection.once('open', function () {
   console.log('Connected to DB');
+})
+
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function callback() {
+//   console.log('Connected to DB');
+// });
+
+// Bootstrap models
+var models_path = __dirname + '/models'
+fs.readdirSync(models_path).forEach(function (file) {
+  if (~file.indexOf('.js')) require(models_path + '/' + file)
 });
 
-// User Schema
-var userSchema = mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true},
-});
+var User = mongoose.model('User');
+var File = mongoose.model('File');
 
-// Bcrypt middleware
-userSchema.pre('save', function(next) {
-  var user = this;
-
-  if(!user.isModified('password')) return next();
-
-  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-    if(err) return next(err);
-
-    bcrypt.hash(user.password, salt, function(err, hash) {
-      if(err) return next(err);
-      user.password = hash;
-      next();
-    });
-  });
-});
-
-// Password verification
-userSchema.methods.comparePassword = function(candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-    if(err) return cb(err);
-    cb(null, isMatch);
-  });
-};
-
-var User = mongoose.model('User', userSchema);
-
-var File = require('./models/file.js');
+// Passport config
+require('./config/passport')(passport, config);
 
 // Seed a user
 // var user = new User({ username: 'bob', email: 'bob@example.com', password: 'secret' });
@@ -67,31 +68,6 @@ var File = require('./models/file.js');
 //     console.log('user: ' + user.username + " saved.");
 //   }
 // });
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
-});
-
-passport.use(new LocalStrategy(function(username, password, done) {
-    User.findOne({ username: username }, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-      user.comparePassword(password, function(err, isMatch) {
-        if (err) return done(err);
-        if(isMatch) {
-          return done(null, user);
-        } else {
-          return done(null, false, { message: 'Invalid password' });
-        }
-      });
-    });
-}));
 
 var routes = require('./routes/index');
 // var files = require('./routes/files')

@@ -16,4 +16,4 @@ FileSchema.plugin(crate, {
   }
 });
 
-module.exports = mongoose.model('File', FileSchema);
+mongoose.model('File', FileSchema);
