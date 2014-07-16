@@ -12,10 +12,20 @@
   <% include nav %>
   <div class="container">
 
-  <% if (message && message.length > 0) { %>
-  <div class="alert alert-success alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    <%= message %>
-  </div>
+  <% if (message && message.info && message.info.length > 0) { %>
+    <% for (var i = 0; i<message.info.length; i++) { %>
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <%= message.info[0] %>
+    </div>
+    <% } %>
   <% } %>
 
+  <% if (message && message.error && message.error.length > 0) { %>
+    <% for (var i = 0; i<message.error.length; i++) { %>
+      <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <%= message.error[0] %>
+      </div>
+    <% } %>
+  <% } %>

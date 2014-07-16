@@ -16,10 +16,10 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if (!user) { %>
-          <li><a href="/login">Log In</a></li>
+          <li><a href="/users/login">Log In</a></li>
         <% } else { %>
-          <li><p class="navbar-text">Logged in as <a href="/account"><%= user.username %></a></p></li>
-          <li><a href="/logout">Log Out</a></li>
+          <li><p class="navbar-text">Logged in as <a href="/users"><%= user.username %></a></p></li>
+          <li><a href="/users/logout">Log Out</a></li>
         <% } %>
       </ul>
     </div>
