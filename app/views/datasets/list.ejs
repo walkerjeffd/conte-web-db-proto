@@ -1,0 +1,14 @@
+<% include ../head %>
+
+<h1>Datasets list</h1>
+
+<p><a href="/datasets/upload">Upload new dataset</a>.</p>
+
+<ul>
+  <% for(var i=0; i<datasets.length; i++) {%>
+    <li><a href="/datasets/<%= datasets[i].id %>"><%= datasets[i].file.filename %></a> 
+        - <a href="/users/<%= datasets[i].user.id %>"><%= datasets[i].user.username %></a></li>
+  <% } %>
+</ul>
+
+<% include ../foot %>

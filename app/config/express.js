@@ -49,7 +49,12 @@ module.exports = function (app, config, passport) {
   app.use(multer({ dest: config.root + '/uploads' }));
 
   // expresssession storage
-  app.use(session({ secret: pkg.name, resave: true, saveUninitialized: true }));
+  app.use(session({ 
+    secret: pkg.name, 
+    resave: true, 
+    saveUninitialized: true,
+    cookie: {maxAge: 3600000} 
+  }));
 
   // use passport session
   app.use(passport.initialize());
