@@ -6,7 +6,7 @@
 
 <ul>
   <% for(var i=0; i<datasets.length; i++) {%>
-    <li><a href="/datasets/<%= datasets[i].id %>"><%= datasets[i].file.filename %></a> 
+    <li><a href="/datasets/<%= datasets[i].id %>"><%= datasets[i].series %></a> 
         - <a href="/users/<%= datasets[i].user.id %>"><%= datasets[i].user.username %></a></li>
   <% } %>
 </ul>

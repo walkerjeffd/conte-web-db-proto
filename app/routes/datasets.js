@@ -12,9 +12,11 @@ var async = require('async')
 
 // Datasets list
 router.get('/', function(req, res) {
-  Dataset.find({}).populate('file user').exec(function(err, datasets) {
-    res.render('datasets/list', { datasets: datasets });
-  });
+  Dataset.find({})
+    .populate('file user')
+    .exec(function(err, datasets) {
+      res.render('datasets/list', { datasets: datasets });
+    });
 });
 
 // Dataset upload - GET
@@ -40,11 +42,13 @@ router.post('/upload', function(req, res, next) {
     },
     function (file, callback) {
       Location.create({name: req.body.location_name, user: req.user}, function (err, location) {
+        if (err) next(err);
         callback(null, file, location);
       });
     },
     function (file, location, callback) {
       Variable.create({name: req.body.variable_name}, function (err, variable) {
+        if (err) next(err);
         callback(null, file, location, variable);
       })
     },
@@ -52,12 +56,14 @@ router.post('/upload', function(req, res, next) {
       var parser = csv.parse({columns: ['DATE','VALUE']}, function (err, data) {
         data.shift() // drop first header row
         var series = new Series();
-        series.location = location.id;
-        series.variable = variable.id;
+        series.location = location;
+        series.variable = variable;
         data.forEach(function (d) {
           series.values.push({'datetime': new Date(Date.parse(d.DATE)), 'value': +d.VALUE});
         });
         series.save(function (err, series) {
+          console.log(series);
+          if (err) next(err);
           callback(null, file, series);
         });
       });

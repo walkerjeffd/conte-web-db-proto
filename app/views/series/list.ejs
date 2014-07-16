@@ -2,12 +2,12 @@
 
 <h1>Series list</h1>
 
-<% if (series || series.length == 0) { %>
+<% if (series && series.length == 0) { %>
 <p>There are no series. Go <a href="/datasets/upload">add a dataset</a>.</p>
 <% } else { %>
 <ul>
   <% for(var i=0; i<series.length; i++) {%>
-    <li><a href="/series/<%= series[i].id %>"><%= series[i].variable.name %> - <%= series[i].location.name %></a></li>
+    <li><a href="/series/<%= series[i].id %>"><%= series[i].name %>, <%= series[i].datespan %></a></li>
   <% } %>
 </ul>
 <% } %>
