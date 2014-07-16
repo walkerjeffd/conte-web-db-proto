@@ -1,6 +1,7 @@
 var express = require('express')
   , session = require('express-session')
   , flash = require('connect-flash')
+  , mongoStore = require('connect-mongo')(session)
   // , winston = require('winston')
   // , helpers = require('view-helpers')
   , favicon = require('static-favicon')
@@ -50,10 +51,13 @@ module.exports = function (app, config, passport) {
 
   // expresssession storage
   app.use(session({ 
+    store: new mongoStore({
+        url: config.db,
+        collection : 'sessions'
+      }),
     secret: pkg.name, 
     resave: true, 
-    saveUninitialized: true,
-    cookie: {maxAge: 3600000} 
+    saveUninitialized: true
   }));
 
   // use passport session

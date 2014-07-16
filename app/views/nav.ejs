@@ -19,7 +19,7 @@
         <% if (!user) { %>
           <li><a href="/users/login">Log In</a></li>
         <% } else { %>
-          <li><p class="navbar-text">Logged in as <a href="/users"><%= user.username %></a></p></li>
+          <li><p class="navbar-text">Logged in as <a href="/users/<%= user.id %>"><%= user.username %></a></p></li>
           <li><a href="/users/logout">Log Out</a></li>
         <% } %>
       </ul>
