@@ -7,7 +7,7 @@
 <% } else { %>
 <ul>
   <% for(var i=0; i<series.length; i++) {%>
-    <li><a href="/series/<%= series[i].id %>"><%= series[i].name %>, <%= series[i].datespan %></a></li>
+    <li><a href="/series/<%= series[i].id %>"><%= series[i].name %> | <%= series[i].datespan %></a></li>
   <% } %>
 </ul>
 <% } %>

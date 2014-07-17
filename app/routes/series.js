@@ -18,6 +18,12 @@ router.get('/', function(req, res) {
   });
 });
 
+router.get('/state/:state', function(req, res) {
+  filterSeriesByState(req.params.state, function (err, series) {
+    res.render('series/list', { series: series });
+  });
+});
+
 // Series detail
 router.get('/:id', function (req, res, next) {
   Series.findOne({'_id': req.params.id})
@@ -29,5 +35,18 @@ router.get('/:id', function (req, res, next) {
     }
   );
 });
+
+
+function filterSeriesByState (state, callback) {
+  Series.find({})
+    .populate('variable location')
+    .exec(function (err, series) {
+      if (err) throw(err);
+      series = _.filter(series, function (s) {
+        return s.location.state === state;
+      });
+      callback(err, series);
+});
+}
 
 module.exports = router;

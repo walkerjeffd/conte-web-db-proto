@@ -18,7 +18,7 @@ var SeriesSchema = new Schema({
 });
 
 SeriesSchema.virtual('name').get(function () {
-  return '<' + this.variable.name + ' @ ' + this.location.name + '>';
+  return this.variable.name + ' @ ' + this.location.name;
 })
 
 SeriesSchema.virtual('datespan').get(function() {

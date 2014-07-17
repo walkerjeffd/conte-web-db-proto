@@ -3,7 +3,6 @@ var mongoose = require('mongoose')
 
 var VariableSchema = new Schema({
   name: String,
-  description: String,
   units: String
 });
 

@@ -1,4 +1,5 @@
-var async = require('async')
+var _ = require('lodash')
+  , async = require('async')
   , fs = require('fs')
   , express = require('express')
   , router = express.Router()
@@ -20,8 +21,26 @@ router.get('/', function(req, res) {
 });
 
 // Dataset upload - GET
-router.get('/upload', function(req, res) {
-  res.render('datasets/upload');
+router.get('/upload', function(req, res, next) {
+  async.waterfall([
+    function (callback) {
+      Location.find(function(err, locations) {
+        if(err) return next(err);
+        locations = _.pluck(locations, 'name');
+        callback(null, locations);
+      });
+    },
+    function (locations, callback) {
+      Variable.find(function(err, variables) {
+        if(err) return next(err);
+        variables = _.pluck(variables, 'name');
+        callback(null, locations, variables);
+      })
+    },
+    function (locations, variables, callback) {
+      res.render('datasets/upload', { locations: locations, variables: variables });
+    }
+  ]);
 });
 
 // Dataset upload - POST
@@ -41,13 +60,13 @@ router.post('/upload', function(req, res, next) {
       });
     },
     function (file, callback) {
-      Location.create({name: req.body.location_name, user: req.user}, function (err, location) {
+      Location.findOne({name: req.body.location}, function (err, location) {
         if (err) next(err);
         callback(null, file, location);
-      });
+      })
     },
     function (file, location, callback) {
-      Variable.create({name: req.body.variable_name}, function (err, variable) {
+      Variable.findOne({name: req.body.variable}, function (err, variable) {
         if (err) next(err);
         callback(null, file, location, variable);
       })
