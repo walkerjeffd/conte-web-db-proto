@@ -2,6 +2,17 @@
 
 <h1>Dataset detail</h1>
 
+<ul>
+  <li><b>ID</b>: <%= dataset.id %></li>
+  <li><b>Owner</b>: <%= dataset.user.username %></li>
+</ul>
+
+<div>
+  <a href="/files/<%= dataset.file.id %>/download" class="btn btn-primary">Download Original File</a>
+</div>
+
+<h4>Associated Series</h4>
+
 <% if (dataset.series && dataset.series.length > 0) { %>
   <ul>
   <% for(var i=0; i<dataset.series.length; i++) {%>
@@ -9,6 +20,8 @@
   <% } %>
   </ul>
 <% } %>
+
+<hr>
 
 <pre><%= dataset %></pre>
 

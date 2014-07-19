@@ -1,0 +1,52 @@
+<% include ../head %>
+
+<h1>Locations lists</h1>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div id="map"></div>
+    
+  </div>
+  <div class="col-lg-6">
+    <% if (locations && locations.length == 0) { %>
+      <p>There are no locations.</p>
+      <% } else { %>
+      <ul>
+        <% for(var i=0; i<locations.length; i++) {%>
+          <li><a href="/locations/<%= locations[i].id %>"><%= locations[i].name %> &lt;<%= locations[i].latitude %>, <%= locations[i].longitude %>&gt;</a></li>
+        <% } %>
+      </ul>
+      <% } %>    
+  </div>
+</div>
+
+<hr>
+
+<pre><%= locations %></pre>
+
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script>
+<% var locationsJSON = JSON.stringify(locations) %>
+var locations = <%- locationsJSON %>;
+
+var map = L.map('map').setView([43, -71], 6);
+L.tileLayer('http://api.tiles.mapbox.com/v3/walkerjeffd.j0do2co5/{z}/{x}/{y}.png?pk.eyJ1Ijoid2Fsa2VyamVmZmQiLCJhIjoiTjgzUzU1WSJ9.HoqrxfD0UWVBmSnErIcysA', {
+  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+  maxZoom: 18
+}).addTo(map);
+
+locations.forEach(function(location) {
+  // L.circle([location.latitude, location.longitude], 500, {
+  //   color: 'red',
+  //   fillColor: 'red',
+  //   fillOpacity: 0.5
+  // }).bindPopup('<a href="/locations/' + location._id + '">' + location.name + ', ' + location.state + '</a>').addTo(map);
+  L.marker([location.latitude, location.longitude], {
+    // color: 'red',
+    // fillColor: 'red',
+    // fillOpacity: 0.5
+  }).bindPopup('<a href="/locations/' + location._id + '">' + location.name + ', ' + location.state + '</a>').addTo(map);
+});
+</script>
+
+<% include ../foot %>

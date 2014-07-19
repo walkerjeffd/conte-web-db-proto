@@ -3,5 +3,6 @@ module.exports = function (app, passport) {
   app.use('/files', require('../routes/files'));
   app.use('/datasets', require('../routes/datasets'));
   app.use('/series', require('../routes/series'));
+  app.use('/locations', require('../routes/locations'));
   app.use('/users', require('../routes/users'));
 }
