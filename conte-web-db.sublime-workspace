@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"bootstrap",
+				"bootstrap-theme-lumen"
+			],
+			[
 				"method",
 				"methodOverride"
 			],
@@ -168,12 +172,19 @@
 	"buffers":
 	[
 		{
-			"contents": "#include <JeeLib.h>\n\nISR(WDT_vect) { Sleepy::watchdogEvent(); }\n \n \n#define outFileName \"data000.csv\"\n \n#define BATTERYPIN A3\n\n \n\n // temp and humidity\n #include \"DHT.h\"\n\n#define DHTPIN A1     // what pin we're connected to\n\n #define DHTTYPE DHT22   // DHT 22  (AM2302)\n\n\n#include <Wire.h>\n\nint debug=1;\n\n\nDHT dht(DHTPIN, DHTTYPE);\n \n\nint led = A2;\n\n\n \n#include <SPI.h>\n#include <SD.h>\n \n#include <RTClib.h>\n#include <RTC_DS3231.h>\n \nRTC_DS3231 RTC;\n \n \n// On the Ethernet Shield, CS is pin 4. Note that even if it's not\n// used as the CS pin, the hardware CS pin (10 on most Arduino boards,\n// 53 on the Mega) must be left as an output or the SD library\n// functions will not work.\nconst int chipSelect = 7;    \nint SDpower = 5;\nint sensorPower = 4;\n \n \nFile dataFile;\n \n \n \nvoid setup(void) {\n  if (debug==1){\n    Serial.begin(9600);\n  }    \n  \n  pinMode(led, OUTPUT); \n  dht.begin();\n  \n  \n  pinMode(SDpower,OUTPUT);\n  pinMode(sensorPower,OUTPUT);\n  digitalWrite(SDpower,LOW);\n  digitalWrite(sensorPower,LOW);\n  \n   //initialize the SD card\n  \n  if (debug==1){\n  Serial.print(\"Initializing SD card...\");\n  }\n  // make sure that the default chip select pin is set to\n  // output, even if you don't use it:\n  pinMode(SS, OUTPUT);\n  \n  // see if the card is present and can be initialized:\n  if (!SD.begin(chipSelect)) {\n  \n     if (debug==1){\n    Serial.println(\"Card failed, or not present\");\n     }\n    // don't do anything more:\n    while (1) ;\n  }\n\n if (debug==1) {\n    Serial.println(\"card initialized.\");\n    }\n  //shut down the SD and the sensor -- HIGH is off\n  //digitalWrite(SDpower,HIGH);\n // digitalWrite(sensorPower,HIGH);\n  \n  pinMode(led, OUTPUT); \n  \n  // for i2c for RTC\n  Wire.begin();\n  RTC.begin();\n  \n\n  //analogReference(EXTERNAL);\n \n  \n  \n  \n  // check on the RTC\n  if (! RTC.isrunning()) {\n     if (debug==1){\n      Serial.println(\"RTC is NOT running!\");\n     }\n      // following line sets the RTC to the date & time this sketch was compiled\n      RTC.adjust(DateTime(__DATE__, __TIME__));\n    }\n  \n    DateTime now = RTC.now();\n    DateTime compiled = DateTime(__DATE__, __TIME__);\n    if (now.unixtime() < compiled.unixtime()) {\n      //Serial.println(\"RTC is older than compile time!  Updating\");\n      RTC.adjust(DateTime(__DATE__, __TIME__));\n    }\n    \n\n  \n  \n}\n \nvoid loop(void) {\n  \n  \n  \n  \n  \n  \n  digitalWrite(led, LOW);\n  //delay(200);\n  \n  Sleepy::loseSomeTime(5000); //-- will interfere with serial, so don't use when debugging \n  //delay (5000); // use when debugging -- loseSomeTime does goofy things w/ serial\n  \n  //wake up the SD card and the sensor\n  //digitalWrite(SDpower,LOW);\n  //digitalWrite(sensorPower,LOW);\n  \n  //dht22\n  // Reading temperature or humidity takes about 250 milliseconds!\n  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)\n  float h = dht.readHumidity();\n  // Read temperature as Celsius\n  float t = dht.readTemperature();\n  // Read temperature as Fahrenheit\n  float f = dht.readTemperature(true);\n  \n  // Check if any reads failed and exit early (to try again).\n  if (isnan(h) || isnan(t) || isnan(f)) {\n     if (debug==1){\n    Serial.println(\"Failed to read from DHT sensor!\");\n     }\n    return;\n  }\n\n  // Compute heat index\n  // Must send in temp in Fahrenheit!\n  float hi = dht.computeHeatIndex(f, h);\n if (debug==1){\n  Serial.print(\"Humidity: \"); \n  Serial.print(h);\n  Serial.print(\" %\\t\");\n  Serial.print(\"Temperature: \"); \n  Serial.print(t);\n  Serial.print(\" *C \");\n  Serial.print(f);\n  Serial.print(\" *F\\t\");\n  Serial.print(\"Heat index: \");\n  Serial.print(hi);\n  Serial.println(\" *F\");\n }\n  \n  \n  \n  DateTime now = RTC.now();\n  \n  //get the onboard temp from the RTC\n  //RTC.forceTempConv(true);  //DS3231 does this every 64 seconds, we are simply testing the function here\n    float RTCTemp = RTC.getTempAsFloat();\n  \n  \n   long unixNow = now.unixtime();\n   //bSerial.println(now.unixtime());\n   \n    \n  digitalWrite(led, HIGH);\n   delay(50);\n   \n  // delay(1000);\n   \n // uint8_t i;\n  \n \n\n \n \n// get the battery level\nint batteryLevel = analogRead(BATTERYPIN);\n \n    \n // write to sd card\n \n \n /*\n // Open up the file we're going to log to!\n  dataFile = SD.open(outFileName, FILE_WRITE);\n  if (! dataFile) {\n    Serial.println(\"error opening datalog.txt\");\n    // Wait forever since we cant write data\n    while (1) ;\n  }\n  */\n  \n  \n  \n  int onboardTempInt = (int) (RTCTemp*100);\n  \n  \n  // make a string for assembling the data to log:\n  String dataString = \"\";\n  \n  dataString += String(unixNow);\n  dataString +=\",\";\n  \n  dataString += onboardTempInt;\n  \n  //dataString += String(unixNow);\n  dataString+=\",\";\n  \n    \n  //Serial.print(h);\n  dataString += String((int) (h*100));\n  dataString+=\",\";\n  \n   //Serial.print(t);\n  dataString += String((int) (t*100));\n  dataString+=\",\";\n    \n  dataString += String(batteryLevel);\n   //no final comma needed\n \n \n \n    // Open up the file we're going to log to!\n  dataFile = SD.open(outFileName, FILE_WRITE);\n  if (! dataFile) {\n     if (debug==1){\n    Serial.println(\"error opening datalog.txt\");\n     }\n    // Wait forever since we cant write data\n    while (1) ;\n  }\n  \n \n \n \n  //write the string to the card\n  dataFile.println(dataString);\n \n dataFile.close();\n  \n   if (debug==1){\n  // print to the serial port too:\n  Serial.println(dataString);\n   }\n   \n  // The following line will 'save' the file to the SD card after every\n  // line of data - this will use more power and slow down how much data\n  // you can read but it's safer! \n  // If you want to speed up the system, remove the call to flush() and it\n  // will save the file only every 512 bytes - every time a sector on the \n  // SD card is filled with data.\n // dataFile.flush();\n //dataFile.close(); //<--- may be unnecessary\n \n \n //shut down the SD and the sensor\n  //digitalWrite(SDpower,HIGH);\n  //digitalWrite(sensorPower,HIGH);\n  \n  //delay(1000);\n  \n}",
+			"file": "app/models/series.js",
 			"settings":
 			{
-				"buffer_size": 5875,
-				"line_ending": "Unix",
-				"name": "#include <JeeLib.h>"
+				"buffer_size": 1003,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/series/list.ejs",
+			"settings":
+			{
+				"buffer_size": 379,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -717,28 +728,78 @@
 	},
 	"file_history":
 	[
-		"/Users/jeff/Projects/USGS/conte-web-db/app/views/file_detail.ejs",
-		"/Users/jeff/Projects/USGS/conte-web-db/app/Gruntfile.js",
-		"/Users/jeff/Projects/USGS/conte-web-db/app/views/files_list.ejs",
-		"/Users/jeff/Projects/USGS/conte-web-db/app/app.js",
-		"/Users/jeff/Projects/USGS/conte-web-db/app/routes/files.js",
-		"/Users/jeff/Projects/USGS/conte-web-db/app/routes/index.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/series/list.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/datasets/list.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/files/list.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/models/dataset.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/scripts/scratch.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/routes/series.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/models/series.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/series/detail.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/routes/datasets.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/datasets/detail.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/scripts/bootstrap.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/datasets/upload.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/bower.json",
+		"/Users/jeff/Projects/USGS/conte-web-db/README.md",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/files/upload.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/models/variable.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/models/location.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/users/login.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/package.json",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/config/passport.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/models/file.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/config/routes.js",
 		"/Users/jeff/Projects/USGS/conte-web-db/app/views/index.ejs",
-		"/Users/jeff/Projects/USGS/conte-web-db/app/views/login.ejs",
-		"/Users/jeff/Projects/USGS/conte-web-db/app/views/file_upload.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/files/eab748e541409afec3ca9c88ec29f3dc.csv",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/Gruntfile.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/notes/files_stream_temperature.md",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/routes/files.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/foot.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/routes/index.js",
 		"/Users/jeff/Projects/USGS/conte-web-db/app/views/nav.ejs",
+		"/Users/jeff/.aliases",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/scripts/clean.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/app.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/config/express.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/users/account.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/routes/users.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/models/user.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/bin/clean",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/files/detail.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/npm-debug.log",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/routes/series/list.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/conte-web-db.sublime-project",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/head.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/example_files/test.csv",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/datasets/details.ejs",
 		"/Users/jeff/Projects/USGS/conte-web-db/.gitignore",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/grunt-bowercopy/node_modules/bower/node_modules/cardinal/lib/highlightFileSync.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/mongodb/lib/mongodb/connection/url_parser.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/grunt-bowercopy/node_modules/bower/node_modules/mout/array/lastIndexOf.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/mongoose/lib/error/divergentArray.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/bower_components/bootstrap/LICENSE",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/mongoose-crate/node_modules/mmmagic/deps/libmagic/pcre/sljit/sljitExecAllocator.c",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/grunt-bowercopy/node_modules/bower/node_modules/mout/object/deepFillIn.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/mongoose-crate-localfs/node_modules/mkdirp/node_modules/minimist/test/parse_modified.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/connect-flash/lib/flash.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/bower_components/bootstrap/js/modal.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/grunt-bowercopy/node_modules/bower/node_modules/inquirer/node_modules/cli-color/node_modules/memoizee/node_modules/event-emitter/benchmark/many-on.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/bcrypt/Makefile",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/head.ejs.bak",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/index.ejs.bak",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/error.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/login.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/config/config.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/grunt-bowercopy/node_modules/bower/node_modules/mout/object/forIn.js",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/file_detail.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/files_list.ejs",
+		"/Users/jeff/Projects/USGS/conte-web-db/app/views/file_upload.ejs",
 		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/grunt-bowercopy/node_modules/bower/node_modules/request/node_modules/oauth-sign/index.js",
 		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/grunt-bowercopy/node_modules/bower/node_modules/retry/lib/retry_operation.js",
-		"/Users/jeff/Projects/USGS/conte-web-db/README.md",
 		"/Users/jeff/Projects/USGS/conte-web-db/app/README.md",
-		"/Users/jeff/Projects/USGS/conte-web-db/app/views/head.ejs",
-		"/Users/jeff/Projects/USGS/conte-web-db/app/package.json",
-		"/Users/jeff/Projects/USGS/conte-web-db/app/views/error.ejs",
 		"/Users/jeff/Projects/USGS/conte-web-db/app/public/stylesheets/style.css",
 		"/Users/jeff/Projects/USGS/conte-web-db/app/bower_components/bootstrap/less/mixins/nav-vertical-align.less",
-		"/Users/jeff/Projects/USGS/conte-web-db/app/views/foot.ejs",
-		"/Users/jeff/Projects/USGS/conte-web-db/app/bower_components/bootstrap/LICENSE",
 		"/Users/jeff/Projects/USGS/conte-web-db/app/bower_components/bootstrap/less/labels.less",
 		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/express/lib/router/layer.js",
 		"/Users/jeff/Projects/USGS/conte-web-db/app/node_modules/bcrypt/examples/async_compare.js",
@@ -794,57 +855,7 @@
 		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/package.json",
 		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/app.js",
 		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/bin/www",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/public/hello.txt",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/user.jade",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/mixins.jade",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/home.jade",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/layout.jade",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/node_modules/less-middleware/node_modules/less/test/css/debug/linenumbers-all.css",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/node_modules/express/LICENSE",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/views/home.jad",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/11/twitter.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/10/connect.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/10/query.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/10/server.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/06/config.json",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/10/config.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/6-files/__MACOSX/._config.json",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/6-files/config.json",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/09/package.json",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/08/github.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/08/server.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/07/request.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/08/my_module.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/7-files/request.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/6-files/server.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/06/server.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/4-files/server.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/13-files/server.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/12-files/server.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/10-files/server.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/04/server.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/04/config.json",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/configuration.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/config.json",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/10-files/config.json",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/12-files/config.json",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/3-files/config.json",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/4-files/config.json",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/05/sample.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/04/public/world.html",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/6-files/public/world.html",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/write_sync.txt",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/04/public/hello.html",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/6-files/public/hello.html",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/write_sync.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/write.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/watch.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/3-files/configuration.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/read_sync.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/tuts/3-files/read_sync.js",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/read.js",
-		"/C/Users/Jeff/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
-		"/C/Users/Jeff/Dropbox/Programming/nodejs/intro-to-node/03/files/sample.txt"
+		"/C/Users/Jeff/Dropbox/Programming/nodejs/build-web-apps-express/helloExpress/public/hello.txt"
 	],
 	"find":
 	{
@@ -859,9 +870,72 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"  .",
+			"User",
+			"location_name",
+			"sm-8",
+			"sm-10",
+			"sm-4",
+			"sm-6",
+			"m-2",
+			"<label",
+			"label",
+			"10",
+			"locations",
+			"Location",
+			"Name",
+			"User",
+			"clean",
+			"throw",
+			"function",
+			"</a>",
+			",",
+			"User",
+			"uploads",
+			"dataset",
+			"datasets",
+			"series",
+			"Dataset",
+			"Datasets",
+			"datasets",
+			"users",
+			"file",
+			"File",
+			"files",
+			"Files",
+			"File",
+			"inputFile",
+			"files",
+			"ref=",
+			"Location",
+			"Series",
+			"Dataset",
+			"ObjectId",
+			"File",
+			"info",
+			"})",
+			"message",
+			"info",
+			"user: req.user, ",
+			" user: req.user,",
+			"fs",
+			"path",
+			"mongodb",
+			"passport",
+			"LocalStrategy",
+			"include",
+			"session",
+			"render",
+			"app",
+			"File",
+			"/files",
+			"app",
+			"bcrypt",
+			"Bcrypt",
+			"bcrypt",
 			"css",
 			"save",
 			"router",
@@ -926,70 +1000,7 @@
 			"    ",
 			"   ",
 			"  ",
-			" ",
-			"h2",
-			"h3",
-			"li",
-			"p>",
-			"W",
-			"°",
-			"W",
-			"1",
-			"proj/",
-			"proj",
-			"lib",
-			"data",
-			"tab-btn",
-			"</p>",
-			"<p>",
-			"p>",
-			"div",
-			"post",
-			"location.html",
-			"nws",
-			"latest_forecasts",
-			"\"",
-			"start",
-			"int(config",
-			"START",
-			"START_DATE",
-			"csv",
-			"res['YearMonthDay']",
-			"res",
-			"x",
-			"res['YearMonthDay']",
-			"d",
-			"r.text",
-			"lines",
-			"=",
-			"i",
-			"/",
-			"ALPHA_SOURCE_FOLDER",
-			"=None",
-			"event_id",
-			"filename",
-			"load_and_save_usgs",
-			"\\",
-			"usgs",
-			"usgs_alewife",
-			"ale_flows",
-			"ale_",
-			"–",
-			"h1",
-			"<li>",
-			"<activation@example.com>",
-			"local",
-			"\\",
-			"com",
-			"wirm.walkerjeff",
-			"em",
-			"modal",
-			"h5",
-			"input",
-			"static",
-			"local",
-			"public",
-			"local"
+			" "
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1014,32 +1025,60 @@
 			[
 				{
 					"buffer": 0,
+					"file": "app/models/series.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5875,
+						"buffer_size": 1003,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5875,
-								5875
+								709,
+								709
 							]
 						],
 						"settings":
 						{
-							"auto_name": "#include <JeeLib.h>",
-							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": -0.0,
-						"translation.y": 4473.0,
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/views/series/list.ejs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 379,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7,
+								7
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1108,6 +1147,194 @@
 		"selected_items":
 		[
 			[
+				"seli",
+				"app/views/series/list.ejs"
+			],
+			[
+				"list",
+				"app/views/datasets/list.ejs"
+			],
+			[
+				"ms",
+				"app/models/series.js"
+			],
+			[
+				"series",
+				"app/routes/series.js"
+			],
+			[
+				"moda",
+				"app/models/dataset.js"
+			],
+			[
+				"data",
+				"app/routes/datasets.js"
+			],
+			[
+				"boot",
+				"app/scripts/bootstrap.js"
+			],
+			[
+				"rda",
+				"app/routes/datasets.js"
+			],
+			[
+				"uplo",
+				"app/views/datasets/upload.ejs"
+			],
+			[
+				"var",
+				"app/models/variable.js"
+			],
+			[
+				"boo",
+				"app/scripts/bootstrap.js"
+			],
+			[
+				"loc",
+				"app/models/location.js"
+			],
+			[
+				"pack",
+				"app/package.json"
+			],
+			[
+				"modse",
+				"app/models/series.js"
+			],
+			[
+				"route",
+				"app/routes/datasets.js"
+			],
+			[
+				"viels",
+				"app/views/datasets/list.ejs"
+			],
+			[
+				"listse",
+				"app/views/series/list.ejs"
+			],
+			[
+				"seri",
+				"app/views/series/detail.ejs"
+			],
+			[
+				"mose",
+				"app/models/series.js"
+			],
+			[
+				"sli",
+				"app/views/series/list.ejs"
+			],
+			[
+				"file",
+				"app/views/files/list.ejs"
+			],
+			[
+				"roda",
+				"app/routes/datasets.js"
+			],
+			[
+				"nav",
+				"app/views/nav.ejs"
+			],
+			[
+				"log",
+				"app/views/users/login.ejs"
+			],
+			[
+				"exp",
+				"app/config/express.js"
+			],
+			[
+				"cl",
+				"app/scripts/clean.js"
+			],
+			[
+				"app",
+				"app/app.js"
+			],
+			[
+				"clea",
+				"app/bin/clean"
+			],
+			[
+				"pas",
+				"app/config/passport.js"
+			],
+			[
+				"det",
+				"app/views/series/detail.ejs"
+			],
+			[
+				"li",
+				"app/views/series/list.ejs"
+			],
+			[
+				"deta",
+				"app/views/series/detail.ejs"
+			],
+			[
+				"ind",
+				"app/views/index.ejs"
+			],
+			[
+				"conex",
+				"app/config/express.js"
+			],
+			[
+				"pass",
+				"app/config/passport.js"
+			],
+			[
+				"head",
+				"app/views/head.ejs"
+			],
+			[
+				"h",
+				"app/views/head.ejs"
+			],
+			[
+				"bo",
+				"app/bower.json"
+			],
+			[
+				"serie",
+				"app/models/series.js"
+			],
+			[
+				"expr",
+				"app/config/express.js"
+			],
+			[
+				"roude",
+				"app/routes/datasets.js"
+			],
+			[
+				"file.js",
+				"app/models/file.js"
+			],
+			[
+				"",
+				"conte-web-db.sublime-project"
+			],
+			[
+				"files",
+				"app/routes/files.js"
+			],
+			[
+				"ser",
+				"app/models/series.js"
+			],
+			[
+				"loca",
+				"app/models/location.js"
+			],
+			[
+				"modfile",
+				"app/models/file.js"
+			],
+			[
 				"g",
 				"app/Gruntfile.js"
 			],
@@ -1120,32 +1347,12 @@
 				"app/views/index.ejs"
 			],
 			[
-				"app",
-				"app/app.js"
-			],
-			[
-				"nav",
-				"app/views/nav.ejs"
-			],
-			[
 				"foo",
 				"app/views/foot.ejs"
 			],
 			[
-				"head",
-				"app/views/head.ejs"
-			],
-			[
-				"ind",
-				"app/views/index.ejs"
-			],
-			[
 				".g",
 				".gitignore"
-			],
-			[
-				"pack",
-				"app/package.json"
 			],
 			[
 				".gi",
@@ -1166,10 +1373,6 @@
 			[
 				"app.js",
 				"prototype-webapp\\app.js"
-			],
-			[
-				"bo",
-				"prototype-webapp\\bower.json"
 			],
 			[
 				"ran",
@@ -1217,10 +1420,6 @@
 			],
 			[
 				"hom",
-				"views\\home.jade"
-			],
-			[
-				"h",
 				"views\\home.jade"
 			],
 			[
@@ -1316,10 +1515,6 @@
 				"requirements\\common.txt"
 			],
 			[
-				"loca",
-				"app\\templates\\location_detail.html"
-			],
-			[
 				"read",
 				"README.md"
 			],
@@ -1342,10 +1537,6 @@
 			[
 				"view",
 				"app\\main\\views.py"
-			],
-			[
-				"loc",
-				"app\\templates\\location.html"
 			],
 			[
 				"usgs",
@@ -1466,158 +1657,6 @@
 			[
 				"cli",
 				"mysite/templates/client.html"
-			],
-			[
-				"local",
-				"mysite/mysite/settings/local.py"
-			],
-			[
-				"the",
-				"mysite/templates/theory.html"
-			],
-			[
-				"pas",
-				"passenger_wsgi.py"
-			],
-			[
-				"clie",
-				"mysite/templates/client.html"
-			],
-			[
-				"ab",
-				"mysite/templates/about.html"
-			],
-			[
-				"sett",
-				"mysite/mysite/settings/base.py"
-			],
-			[
-				"set",
-				"mysite/mysite/settings/production.py"
-			],
-			[
-				"json",
-				"mysite/fixtures/parameters.json"
-			],
-			[
-				"das",
-				"mysite/wirm/static/js/views/dashboard.js"
-			],
-			[
-				"work",
-				"mysite/wirm/static/js/routers/workspace.js"
-			],
-			[
-				"proje",
-				"mysite/wirm/static/js/views/project.js"
-			],
-			[
-				"proj",
-				"mysite/wirm/static/js/models/project.js"
-			],
-			[
-				"contr",
-				"mysite/wirm/static/js/views/controls.js"
-			],
-			[
-				"sim",
-				"mysite/wirm/static/js/views/simulation.js"
-			],
-			[
-				"char",
-				"mysite/wirm/static/js/views/chart.js"
-			],
-			[
-				"chart",
-				"mysite/wirm/static/js/views/chart.js"
-			],
-			[
-				"projec",
-				"mysite/wirm/static/js/views/project.js"
-			],
-			[
-				"url",
-				"mysite/mysite/urls.py"
-			],
-			[
-				"back",
-				"mysite/templates/background.html"
-			],
-			[
-				"tut",
-				"mysite/templates/tutorial.html"
-			],
-			[
-				"cont",
-				"mysite/wirm/static/js/views/controls.js"
-			],
-			[
-				"th",
-				"mysite/templates/theory.html"
-			],
-			[
-				"b",
-				"mysite/wirm/static/css/base.css"
-			],
-			[
-				"gett",
-				"mysite/templates/getting_started.html"
-			],
-			[
-				"theor",
-				"mysite/templates/theory.html"
-			],
-			[
-				"dash",
-				"mysite/wirm/static/js/views/dashboard.js"
-			],
-			[
-				"simul",
-				"mysite/wirm/static/js/views/simulation.js"
-			],
-			[
-				"mod",
-				"mysite/wirm/models.py"
-			],
-			[
-				"seri",
-				"mysite/wirm/serializers.py"
-			],
-			[
-				"model",
-				"mysite/wirm/models.py"
-			],
-			[
-				"param",
-				"mysite/wirm/static/js/views/parameter.js"
-			],
-			[
-				"d3",
-				"mysite/wirm/static/js/lib/d3-3.0.8.js"
-			],
-			[
-				"clien",
-				"mysite/templates/client.html"
-			],
-			[
-				"bascss",
-				"mysite/wirm/static/css/base.css"
-			],
-			[
-				"log",
-				"mysite/templates/registration/login.html"
-			],
-			[
-				"ge",
-				"mysite/templates/getting_started.html"
-			],
-			[
-				"serial",
-				"mysite/wirm/serializers.py"
-			],
-			[
-				"get",
-				"mysite/templates/getting_started.html"
 			]
 		],
 		"width": 0.0

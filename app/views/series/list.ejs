@@ -1,6 +1,6 @@
 <% include ../head %>
 
-<h1>Series list</h1>
+<h1>All Series By State</h1>
 
 <% if (series && series.length == 0) { %>
 <p>There are no series. Go <a href="/datasets/upload">add a dataset</a>.</p>
@@ -11,5 +11,7 @@
   <% } %>
 </ul>
 <% } %>
+
+<pre><%= series %></pre>
 
 <% include ../foot %>

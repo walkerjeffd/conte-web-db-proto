@@ -1,0 +1,42 @@
+<% include ../head %>
+
+<h1>All Series By State</h1>
+
+<% if (series && series.length == 0) { %>
+<p>There are no series. Go <a href="/datasets/upload">add a dataset</a>.</p>
+<% } else { %>
+<ul>
+  <% for(var i=0; i<series.length; i++) {%>
+    <li><a href="/series/<%= series[i].id %>"><%= series[i].name %> | <%= series[i].datespan %></a></li>
+  <% } %>
+</ul>
+<% } %>
+
+<div class="row">
+  <div class="col-md-6">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Location Name</th>
+          <th>Variable Name</th>
+          <th>Date</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% for(var i = 0; i < mergedSeries.length; i++) { %>
+        <tr>
+          <td><%= mergedSeries[i].location %></td>
+          <td><%= mergedSeries[i].variable %></td>
+          <td><%= mergedSeries[i].datetime.toISOString() %></td>
+          <td><%= mergedSeries[i].value %></td>
+        </tr>
+      <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<pre><%= series %></pre>
+
+<% include ../foot %>

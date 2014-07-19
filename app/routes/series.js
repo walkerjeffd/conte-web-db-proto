@@ -19,8 +19,16 @@ router.get('/', function(req, res) {
 });
 
 router.get('/state/:state', function(req, res) {
-  filterSeriesByState(req.params.state, function (err, series) {
-    res.render('series/list', { series: series });
+  filterSeriesByState2(req.params.state, function (err, series) {
+    var mergedSeries = _.flatten(series.map(function(s) {
+      var values = s.values.toObject().map(function(v) {
+        v.location = s.location.name;
+        v.variable = s.variable.name;
+        return v;
+      });
+      return values;
+    }));
+    res.render('series/state', { series: series, mergedSeries: mergedSeries });
   });
 });
 
@@ -46,7 +54,18 @@ function filterSeriesByState (state, callback) {
         return s.location.state === state;
       });
       callback(err, series);
-});
+  });
+}
+
+function filterSeriesByState2 (state, callback) {
+  Location.find({'state': state}, function (err, locations) {
+    location_ids = locations.map(function(l) { return l._id; });
+    Series.find({'location': {$in: location_ids}})
+      .populate('variable location')
+      .exec(function (err, series) {
+        callback(err, series);
+    });
+  });
 }
 
 module.exports = router;

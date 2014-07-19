@@ -12,7 +12,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label" for="inputLocation">Location :</label>
     <div class="col-sm-6">
-      <select name="location" id="inputLocation">
+      <select name="location" id="inputLocation" class="form-control">
       <% for (var i = 0; i < locations.length; i++) { %>
         <option value="<%= locations[i] %>"><%= locations[i] %></option> 
       <% } %>
@@ -22,7 +22,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label" for="inputVariable">Variable :</label>
     <div class="col-sm-6">
-      <select name="variable" id="inputVariable">
+      <select name="variable" id="inputVariable" class="form-control">
       <% for (var i = 0; i < variables.length; i++) { %>
         <option value="<%= variables[i] %>"><%= variables[i] %></option> 
       <% } %>
